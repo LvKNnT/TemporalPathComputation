@@ -1,0 +1,83 @@
+Current file: "D:\\Code\\from_git\\DSA\\raw\\ca-cit-HepPh\\out.ca-cit-HepPh"
+Foremost!
+1-pass graph: 0.109988 seconds.
+Transforming graph: 2.21096 seconds.
+Correct!
+
+Reverse-Foremost!
+1-pass graph: 0.0739651 seconds.
+Transforming graph: 0.0001457 seconds.
+Correct!
+
+Fastest!
+1-pass graph: 3.6658 seconds.
+Transforming graph: 1.10041 seconds.
+Correct!
+
+Shortest!
+1-pass graph: 1.28559 seconds.
+Transforming graph: 3.0638 seconds.
+Correct!
+
+Current file: "D:\\Code\\from_git\\DSA\\raw\\dblp_coauthor\\out.dblp_coauthor"
+Foremost!
+1-pass graph: 1.11078 seconds.
+Transforming graph: 54.5851 seconds.
+Correct!
+
+Reverse-Foremost!
+1-pass graph: 0.550021 seconds.
+Transforming graph: 9.55786 seconds.
+Correct!
+
+Fastest!
+1-pass graph: 29.1165 seconds.
+Transforming graph: 33.1356 seconds.
+Correct!
+
+Shortest!
+1-pass graph: 16.9332 seconds.
+Transforming graph: 71.7566 seconds.
+Correct!
+
+Current file: "D:\\Code\\from_git\\DSA\\raw\\flickr-growth\\out.flickr-growth"
+Foremost!
+1-pass graph: 1.60956 seconds.
+Transforming graph: 83.7243 seconds.
+Correct!
+
+Reverse-Foremost!
+1-pass graph: 1.06918 seconds.
+Transforming graph: 0.0029947 seconds.
+Correct!
+
+Fastest!
+1-pass graph: 23.1213 seconds.
+Transforming graph: 55.531 seconds.
+Correct!
+
+Shortest!
+1-pass graph: 24.2516 seconds.
+Transforming graph: 126.593 seconds.
+Correct!
+
+Current file: "D:\\Code\\from_git\\DSA\\raw\\youtube-u-growth\\out.youtube-u-growth"
+Foremost!
+1-pass graph: 0.439204 seconds.
+Transforming graph: 28.8086 seconds.
+Correct!
+
+Reverse-Foremost!
+1-pass graph: 0.233446 seconds.
+Transforming graph: 0.0051364 seconds.
+Correct!
+
+Fastest!
+1-pass graph: 4.49566 seconds.
+Transforming graph: 21.118 seconds.
+Correct!
+
+Shortest!
+1-pass graph: 4.26437 seconds.
+Transforming graph: 34.707 seconds.
+Correct!
