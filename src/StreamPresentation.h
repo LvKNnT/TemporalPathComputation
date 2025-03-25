@@ -1,7 +1,9 @@
 #pragma once
 
-#include <bits/stdc++.h>
+// #include <bits/stdc++.h>
 #include "hasher.h"
+#include <algorithm>
+#include <map>
 
 using namespace std;
 

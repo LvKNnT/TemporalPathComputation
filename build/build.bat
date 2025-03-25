@@ -8,7 +8,7 @@ for /R ../src %%f in (*.cpp) do (
 )
 
 :: Compile using g++
-g++ !sources! -o Run.exe -O0 -I ../include/
+g++ ../src/main.cpp -o main.exe -O3 --std=c++20
 
 :: Pause to see errors (if any)
 pause
