@@ -1,6 +1,8 @@
 #pragma ocne
 
-#include<bits/stdc++.h>
+// #include<bits/stdc++.h>
+#include <map>
+#include <vector>
 #include "Hasher.h"
 
 using namespace std;

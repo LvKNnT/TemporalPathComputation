@@ -1,8 +1,16 @@
-#include <bits/stdc++.h>
+// #include <bits/stdc++.h>
+#include <chrono>
+#include <fstream>
+#include <iostream>
+#include <map>
+#include <sstream>
+#include <string>
+#include <vector>
+#include <random>
+
 #include <filesystem>
 #include "StreamPresentation.h"
 #include "TransformingGraph.h"
-#include "GenerateTest.h"
 
 using namespace std;
 namespace fs = std::filesystem;
@@ -79,7 +87,7 @@ void showDifference(fstream& fout, const vector<int>& f, const vector<int>& ff) 
     }
 }
 
-void Foremost(const string& target, const int ta, const int tw, fstream& fin, fstream& fout) {
+void checkForemost(const string& target, const int ta, const int tw, fstream& fin, fstream& fout) {
     fout << "Foremost!\n";
 
     // Setting input for both solutions
@@ -112,11 +120,11 @@ void Foremost(const string& target, const int ta, const int tw, fstream& fin, fs
     }
     else {
         fout << "False!\n";
-        // showDifference(fout, f, ff);
+        showDifference(fout, f, ff);
     }
 }
 
-void ReverseForemost(const string& target, const int ta, const int tw, fstream& fin, fstream& fout) {
+void checkReverseForemost(const string& target, const int ta, const int tw, fstream& fin, fstream& fout) {
     fout << "Reverse-Foremost!\n";
 
     // Setting input for both solutions
@@ -153,7 +161,7 @@ void ReverseForemost(const string& target, const int ta, const int tw, fstream& 
     }
 }
 
-void Fastest(const string& target, const int ta, const int tw, fstream& fin, fstream& fout) {
+void checkFastest(const string& target, const int ta, const int tw, fstream& fin, fstream& fout) {
     fout << "Fastest!\n";
 
     // Setting input for both solutions
@@ -186,11 +194,11 @@ void Fastest(const string& target, const int ta, const int tw, fstream& fin, fst
     }
     else {
         fout << "False!\n";
-        // showDifference(fout, f, ff);
+        showDifference(fout, f, ff);
     }
 }
 
-void Shortest(const string& target, const int ta, const int tw, fstream& fin, fstream& fout) {
+void checkShortest(const string& target, const int ta, const int tw, fstream& fin, fstream& fout) {
     fout << "Shortest!\n";
 
     // Setting input for both solutions
@@ -228,16 +236,14 @@ void Shortest(const string& target, const int ta, const int tw, fstream& fin, fs
 }
 
 signed main() {
-    ios_base::sync_with_stdio(false);
-
-    const std::string DATA_PATH = fs::absolute("../raw/").string();
-    const std::string OUT_PATH = fs::absolute("../testcase/testcase.out").string();
+    const std::string DATA_PATH = "../raw/";
+    const std::string OUT_PATH = "../res/res.out";
 
     // Access to output
     fstream fout(OUT_PATH, ios::out);
     if(!fout.is_open()) {
         cerr << "Failed to open output file!\n";
-        return -1;
+        return 1;
     }
 
     try {
@@ -252,25 +258,85 @@ signed main() {
                 fstream fin(entry.path(), ios::in);
                 if (fin.is_open()) {
                     getGraph(fin);
+                    
+                    mt19937_64 RNG(27);
+                    auto rand = [&](const int& l, const int& r) -> int {
+                        return uniform_int_distribution<int>(l, r)(RNG);
+                    };
 
-                    const string des = "1";
-                    const int ta = 0, tw = INT_MAX;
+                    auto end = std::chrono::high_resolution_clock::now();
+                    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+                    fout << "Time generating graph: " << elapsed.count() * 1e-9 << " seconds.\n";            
+                    cerr << "Time generating graph: " << elapsed.count() * 1e-9 << " seconds.\n";            
+                    
+                    // Check for random 100 inputs
+                    fout << "Average time for 100 random inputs:\n";
 
-                    /*
-                    */
-                    Foremost("1", ta, tw, fin, fout);
-                    fout << "\n";
+                    fout << "Streaming graph:\n";
+                    double foremostTime = 0.0, reverseForemostTime = 0.0, fastestTime = 0.0, shortestTime = 0.0;
                     
-                    ReverseForemost("1", ta, tw, fin, fout);
-                    fout << "\n";
-                    
-                    Fastest("1", ta, tw, fin, fout);
-                    fout << "\n";
-                    
-                    Shortest("1", ta, tw, fin, fout);
-                    fout << "\n";
-                    /*
-                    */
+                    for(int i=0;i<10;++i) {
+                        const int target = rand(0, hasher.GetSize() - 1);
+                        const int ta = 0, tw = INT_MAX;
+                        
+                        auto startRun = std::chrono::high_resolution_clock::now();
+                        StreamPresentation::ComputingForemostTime(target, ta, tw);
+                        auto endRun = std::chrono::high_resolution_clock::now();
+                        foremostTime += std::chrono::duration_cast<std::chrono::nanoseconds>(endRun - startRun).count() * 1e-9;
+
+                        startRun = std::chrono::high_resolution_clock::now();
+                        StreamPresentation::ComputingReverseForemostTime(target, ta, tw);\
+                        endRun = std::chrono::high_resolution_clock::now();
+                        reverseForemostTime += std::chrono::duration_cast<std::chrono::nanoseconds>(endRun - startRun).count() * 1e-9;
+
+                        startRun = std::chrono::high_resolution_clock::now();
+                        StreamPresentation::ComputingFastestPathDuration(target, ta, tw);
+                        endRun = std::chrono::high_resolution_clock::now();
+                        fastestTime += std::chrono::duration_cast<std::chrono::nanoseconds>(endRun - startRun).count() * 1e-9;
+
+                        startRun = std::chrono::high_resolution_clock::now();
+                        StreamPresentation::ComputingShortestPathDistance(target, ta, tw);
+                        endRun = std::chrono::high_resolution_clock::now();
+                        shortestTime += std::chrono::duration_cast<std::chrono::nanoseconds>(endRun - startRun).count() * 1e-9;
+                    }
+
+                    fout << "Foremost: " << foremostTime / 100.0f << " seconds.\n";
+                    fout << "Reverse-Foremost: " << reverseForemostTime / 100.0f << " seconds.\n";
+                    fout << "Fastest: " << fastestTime / 100.0f << " seconds.\n";
+                    fout << "Shortest: " << shortestTime / 100.0f << " seconds.\n";
+
+                    fout << "Transforming graph:\n";
+                    foremostTime = 0.0, reverseForemostTime = 0.0, fastestTime = 0.0, shortestTime = 0.0;
+
+                    for(int i=0;i<10;++i) {
+                        const int target = rand(0, hasher.GetSize() - 1);
+                        const int ta = 0, tw = INT_MAX;
+                        
+                        auto startRun = std::chrono::high_resolution_clock::now();
+                        TransformingGraph::ComputingForemostTime(target, ta, tw);
+                        auto endRun = std::chrono::high_resolution_clock::now();
+                        foremostTime += std::chrono::duration_cast<std::chrono::nanoseconds>(endRun - startRun).count() * 1e-9;
+
+                        startRun = std::chrono::high_resolution_clock::now();
+                        TransformingGraph::ComputingReverseForemostTime(target, ta, tw);
+                        endRun = std::chrono::high_resolution_clock::now();
+                        reverseForemostTime += std::chrono::duration_cast<std::chrono::nanoseconds>(endRun - startRun).count() * 1e-9;
+
+                        startRun = std::chrono::high_resolution_clock::now();
+                        TransformingGraph::ComputingFastestPathDuration(target, ta, tw);
+                        endRun = std::chrono::high_resolution_clock::now();
+                        fastestTime += std::chrono::duration_cast<std::chrono::nanoseconds>(endRun - startRun).count() * 1e-9;
+
+                        startRun = std::chrono::high_resolution_clock::now();
+                        TransformingGraph::ComputingShortestPathDistance(target, ta, tw);
+                        endRun = std::chrono::high_resolution_clock::now();
+                        shortestTime += std::chrono::duration_cast<std::chrono::nanoseconds>(endRun - startRun).count() * 1e-9;
+                    }
+
+                    fout << "Foremost: " << foremostTime / 100.0f << " seconds.\n";
+                    fout << "Reverse-Foremost: " << reverseForemostTime / 100.0f << " seconds.\n";
+                    fout << "Fastest: " << fastestTime / 100.0f << " seconds.\n";
+                    fout << "Shortest: " << shortestTime / 100.0f << " seconds.\n";
 
                     fin.close();
                 } else {
@@ -279,11 +345,45 @@ signed main() {
 
                 auto end = std::chrono::high_resolution_clock::now();
                 auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-                cerr << "Time measured: " << elapsed.count() * 1e-9 << " seconds.\n";            
+                cerr << "Total time measured: " << elapsed.count() * 1e-9 << " seconds.\n";            
+                fout << "Total time measured: " << elapsed.count() * 1e-9 << " seconds.\n\n";            
             }
         }
     } catch (const fs::filesystem_error& e) {
         std::cerr << "Filesystem error: " << e.what() << std::endl;
+        return 1;
+    }
+
+    fout.close();
+    
+    if(fs::file_size(OUT_PATH) == 0) {
+        cerr << "The res.out file is empty!\n";
+        return 0;
+    }
+
+    string logDir = "../log/";
+    
+    // Ensure the log directory exists
+    if(!fs::exists(logDir)) {
+        fs::create_directory(logDir);
+    }
+
+    // Find the next available log file
+    int logIndex = 0;
+    string logPath;
+    do {
+        logPath = logDir + "log" + to_string(logIndex) + ".txt";
+        logIndex++;
+    }
+    while(fs::exists(logPath)); // ensure the file name is unique
+
+    try {
+        fs::copy_file(OUT_PATH, logPath, fs::copy_options::overwrite_existing);
+        cerr << "Log file is saved at: " << logPath << "\n";
+    }
+    catch (const fs::filesystem_error& e) {
+        std::cerr << "Filesystem error: " << e.what() << std::endl;
+        return 1;
     }
 
     return 0;

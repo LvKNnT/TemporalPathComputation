@@ -1,7 +1,8 @@
 #pragma once
 
-#include <bits/stdc++.h>
+// #include <bits/stdc++.h>
 #include "Hasher.h"
+#include <map>
 
 using namespace std;
 
@@ -59,27 +60,28 @@ namespace TransformingGraph {
         t[x] = ta;
 
         queue<pair<int, int> > q;
-        map<int, map<int, bool> > vis;
+        unordered_map<int, unordered_map<int, bool> > vis;
         for(mmpit it = g[x].lower_bound(ta); it != g[x].end() && it->first <= tw; ++it) {
             q.push({x, it->first});
             vis[x][it->first] = true;
         }
 
         while(!q.empty()) {
-            const pair<int, int> u = q.front();
-            q.pop();
-
+            const pair<int, int>& u = q.front();
+            
             for(const pair<pair<int, int>, int>& node : g[u.first][u.second]) {
                 int v = node.first.first;
                 int tv = node.first.second;
-
+                
                 if(tv > tw) continue;
                 if(vis[v].find(tv) != vis[v].end()) continue;
-
+                
                 t[v] = min(t[v], tv);
                 vis[v][tv] = true;
                 q.push({v, tv});
             }
+
+            q.pop();
         }
 
         return t;
@@ -99,13 +101,12 @@ namespace TransformingGraph {
         }
 
         while(!q.empty()) {
-            const pair<int, int> u = q.front();
-            q.pop();
-
+            const pair<int, int>& u = q.front();
+            
             for(const pair<pair<int, int>, int>& node : rev_g[u.first][u.second]) {
                 int v = node.first.first;
                 int tv = node.first.second;
-
+                
                 if(tv < ta) continue;
                 if(vis[v].find(tv) != vis[v].end()) continue;
                 
@@ -113,8 +114,10 @@ namespace TransformingGraph {
                 vis[v][tv] = true;
                 q.push({v, tv});
             }
-        }
 
+            q.pop();
+        }
+        
         return t;
     }
 
@@ -139,16 +142,15 @@ namespace TransformingGraph {
 
             int cur_ta = it->first;
             while(!q.empty()) {
-                const pair<int, int> u = q.front();
-                q.pop();
-
+                const pair<int, int>& u = q.front();
+                
                 for(const pair<pair<int, int>, int>& node : g[u.first][u.second]) {
                     int v = node.first.first;
                     int tv = node.first.second;
                     
                     if(tv > tw) continue;
                     if(vis[v].find(tv) != vis[v].end()) continue;
-
+                    
                     if(tv - cur_ta < t[v]) {
                         t[v] = tv - cur_ta;
                         pre[v] = u.first;
@@ -156,6 +158,8 @@ namespace TransformingGraph {
                     vis[v][tv] = true;
                     q.push({v, tv});
                 }
+
+                q.pop();
             }
         }
         return t;
