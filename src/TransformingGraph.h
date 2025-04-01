@@ -7,50 +7,82 @@
 using namespace std;
 
 namespace TransformingGraph {
-    using mmmp = map<int, map<int, map<pair<int, int>, int> > >;
-    using mmpit = map<int, map<pair<int, int>, int> >::iterator;
-    mmmp g, rev_g;
+    // source:
+    // https://codeforces.com/blog/entry/62393
+    // I just tweak to make it usable for pair<int, int>
+    // need to make sure two var in pair<int, int> are both positive
+    // the idea is simply shift the first int to left 32 bit to fit into a long long
+    struct custom_hash {
+        static uint64_t splitmix64(uint64_t x) {
+            // http://xorshift.di.unimi.it/splitmix64.c
+            x += 0x9e3779b97f4a7c15;
+            x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;
+            x = (x ^ (x >> 27)) * 0x94d049bb133111eb;
+            return x ^ (x >> 31);
+        }
+    
+        size_t operator()(const pair<int, int>& p) const {
+            static const uint64_t FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();
+            uint64_t x = static_cast<uint64_t>(p.first) << 32 + static_cast<uint64_t>(p.second);
+            return splitmix64(x + FIXED_RANDOM);
+        }
+    };
 
-    void GenerateGraph(const vector<vector<int> >& old_g) {
+    unordered_map<pair<int, int>, vector<tuple<int, int, int> >, custom_hash> g, rev_g;
+    unordered_map<int, vector<int>> ins, outs;
+
+    void GenerateGraph(const vector<tuple<int, int, int, int> >& old_g) {
         g.clear();
+        rev_g.clear();
+        ins.clear();
+        outs.clear();
 
-        map<int, map<int, bool> > nodes;
+        unordered_map<pair<int, int>, bool, custom_hash> has_in, has_out;
 
-        for(const vector<int>& e : old_g) {
-            int u = e[0], v = e[1], ta = e[2], tw = e[3];
-
-            g[u][ta][{v, ta + tw}] = tw;
-            nodes[u][ta] = true;
-            nodes[v][ta + tw] = true;
+        for(const auto& [u, v, ta, tw] : old_g) {
+            g[{u, ta}].push_back({v, ta + tw, tw});
+            rev_g[{v, ta + tw}].push_back({u, ta, tw});
+            
+            if(has_out.find({u, ta}) == has_out.end()) {
+                outs[u].push_back(ta);
+                has_out[{u, ta}] = true;
+            }
+            if(has_in.find({v, ta + tw}) == has_in.end()) {
+                ins[v].push_back(ta + tw);
+                has_in[{v, ta + tw}] = true;
+            }
         }
         
-        for(const pair<int, map<int, bool> >& node : nodes) {
-            int u = node.first;
-            for(map<int, bool>::const_iterator it = node.second.begin(); next(it) != node.second.end(); ++it) {
-                g[u][it->first][{u, next(it)->first}] = 0;
+        for(int i=0;i<hasher.GetSize();++i) {
+            sort(ins[i].begin(), ins[i].end());
+            sort(outs[i].begin(), outs[i].end());
+
+            for(int j=1;j<ins[i].size();++j) {
+                g[{i, ins[i][j - 1]}].push_back({i, ins[i][j], 0});
+                rev_g[{i, ins[i][j]}].push_back({i, ins[i][j - 1], 0});
+            }
+            
+            for(int j=1;j<outs[i].size();++j) {
+                g[{i, outs[i][j - 1]}].push_back({i, outs[i][j], 0});
+                rev_g[{i, outs[i][j]}].push_back({i, outs[i][j - 1], 0});
+            }
+
+            for(int l = ins[i].size() - 1, r = outs[i].size() - 1; l >= 0 && r >= 0; --r) {
+                while(l >= 0 && ins[i][l] > outs[i][r]) --l;
+                
+                if(l >= 0) {
+                    g[{i, ins[i][l]}].push_back({i, outs[i][r], 0});
+                    rev_g[{i, outs[i][r]}].push_back({i, ins[i][l], 0});
+                }
             }
         }
     }
 
-    void GenerateReverseGraph(const vector<vector<int> >& old_g) {
+    void ClearGraph() {
+        g.clear();
         rev_g.clear();
-
-        map<int, map<int, bool> > nodes;
-
-        for(const vector<int>& e : old_g) {
-            int u = e[0], v = e[1], ta = e[2], tw = e[3];
-
-            rev_g[v][ta + tw][{u, ta}] = tw;
-            nodes[u][ta] = true;
-            nodes[v][ta + tw] = true;
-        }
-        
-        for(const pair<int, map<int, bool> >& node : nodes) {
-            int u = node.first;
-            for(map<int, bool>::const_iterator it = node.second.begin(); next(it) != node.second.end(); ++it) {
-                rev_g[u][next(it)->first][{u, it->first}] = 0;
-            }
-        }
+        ins.clear();
+        outs.clear();
     }
 
     // Need transforming graph to work
@@ -59,25 +91,23 @@ namespace TransformingGraph {
         vector<int> t(n, INT_MAX);
         t[x] = ta;
 
-        queue<pair<int, int> > q;
-        unordered_map<int, unordered_map<int, bool> > vis;
-        for(mmpit it = g[x].lower_bound(ta); it != g[x].end() && it->first <= tw; ++it) {
-            q.push({x, it->first});
-            vis[x][it->first] = true;
+        queue<tuple<int, int> > q;
+        unordered_map<pair<int, int>, bool, custom_hash> vis;
+        for(vector<int>::iterator it = lower_bound(outs[x].begin(), outs[x].end(), ta); it != outs[x].end() && *it <= tw; ++it) {
+            q.push({x, *it});
+            vis[{x, *it}] = true;
         }
 
         while(!q.empty()) {
-            const pair<int, int>& u = q.front();
+            const auto& [u, tu] = q.front();
             
-            for(const pair<pair<int, int>, int>& node : g[u.first][u.second]) {
-                int v = node.first.first;
-                int tv = node.first.second;
-                
+            for(const auto& [v, tv, wv] : g[{u, tu}]) {
                 if(tv > tw) continue;
-                if(vis[v].find(tv) != vis[v].end()) continue;
+                if(vis.find({v, tv}) != vis.end()) continue;
                 
+
                 t[v] = min(t[v], tv);
-                vis[v][tv] = true;
+                vis[{v, tv}] = true;
                 q.push({v, tv});
             }
 
@@ -93,25 +123,22 @@ namespace TransformingGraph {
         vector<int> t(n, INT_MIN);
         t[x] = tw;
 
-        queue<pair<int, int> > q;
-        unordered_map<int, unordered_map<int, bool> > vis;
-        for(mmpit it = rev_g[x].lower_bound(ta); it != rev_g[x].end() && it->first <= tw; ++it) {
-            q.push({x, it->first});
-            vis[x][it->first] = true;
+        queue<tuple<int, int> > q;
+        unordered_map<pair<int, int>, bool, custom_hash> vis;
+        for(vector<int>::iterator it = lower_bound(ins[x].begin(), ins[x].end(), ta); it != ins[x].end() && *it < tw; ++it) {
+            q.push({x, *it});
+            vis[{x, *it}];
         }
 
         while(!q.empty()) {
-            const pair<int, int>& u = q.front();
+            const auto& [u, tu] = q.front();
             
-            for(const pair<pair<int, int>, int>& node : rev_g[u.first][u.second]) {
-                int v = node.first.first;
-                int tv = node.first.second;
-                
+            for(const auto& [v, tv, wv] : rev_g[{u, tu}]) {
                 if(tv < ta) continue;
-                if(vis[v].find(tv) != vis[v].end()) continue;
+                if(vis.find({v, tv}) != vis.end()) continue;
                 
                 t[v] = max(t[v], tv);
-                vis[v][tv] = true;
+                vis[{v, tv}] = true;
                 q.push({v, tv});
             }
 
@@ -133,29 +160,26 @@ namespace TransformingGraph {
         vector<int> pre(n, -1);
         pre[x] = x;
 
-        queue<pair<int, int> > q;
-        unordered_map<int, unordered_map<int, bool> > vis;
-        for(mmpit it = g[x].upper_bound(tw);it != g[x].begin() && ta <= it->first;) {
+        queue<tuple<int, int> > q;
+        unordered_map<pair<int, int>, bool, custom_hash> vis;
+        for(vector<int>::iterator it = upper_bound(outs[x].begin(), outs[x].end(), tw); it != outs[x].begin();) {
             --it;
-            q.push({x, it->first});
-            vis[x][it->first] = true;
+            q.push({x, *it});
+            vis[{x, *it}] = true;
 
-            int cur_ta = it->first;
+            int cur_ta = *it;
             while(!q.empty()) {
-                const pair<int, int>& u = q.front();
+                const auto& [u, tu] = q.front();
                 
-                for(const pair<pair<int, int>, int>& node : g[u.first][u.second]) {
-                    int v = node.first.first;
-                    int tv = node.first.second;
-                    
+                for(const auto& [v, tv, w_v] : g[{u, tu}]) {
                     if(tv > tw) continue;
-                    if(vis[v].find(tv) != vis[v].end()) continue;
+                    if(vis.find({v, tv}) != vis.end()) continue;
                     
                     if(tv - cur_ta < t[v]) {
                         t[v] = tv - cur_ta;
-                        pre[v] = u.first;
+                        pre[v] = u;
                     }
-                    vis[v][tv] = true;
+                    vis[{v, tv}] = true;
                     q.push({v, tv});
                 }
 
@@ -166,9 +190,9 @@ namespace TransformingGraph {
     }
 
     struct Compare {
-        bool operator()(const pair<pair<int, int>, int>& a, const pair<pair<int, int>, int>& b) const {
-            if(a.second == b.second) return a.first.second > b.first.second; // for a better debug
-            return a.second > b.second;
+        bool operator()(const tuple<int, int, int>& a, const tuple<int, int, int>& b) const {
+            if(get<2>(a) == get<2>(b)) return get<0>(a) < get<0>(b);
+            return get<2>(a) > get<2>(b);
         }
     };
 
@@ -182,35 +206,29 @@ namespace TransformingGraph {
         vector<int> pre(n, -1);
         pre[x] = x;
 
-        priority_queue<pair<pair<int, int>, int>, vector<pair<pair<int, int>, int> >, Compare> q;
-        map<int, map<int, int> > w;
-        for(mmpit it = g[x].lower_bound(ta); it != g[x].end() && it->first <= tw; ++it) {            
-            q.push({{x, it->first}, 0});
-            w[x][it->first] = 0;
+        priority_queue<tuple<int, int, int>, vector<tuple<int, int, int> >, Compare> q;
+        unordered_map<pair<int, int>, int, custom_hash> w;
+        for(vector<int>::iterator it = lower_bound(outs[x].begin(), outs[x].end(), ta); it != outs[x].end() && *it <= tw; ++it) {
+            q.push({x, *it, 0});
+            w[{x, *it}] = 0;
         }
 
         while(!q.empty()) {
-            const pair<pair<int, int>, int> u_node = q.top();
+            const auto [u, tu, wu] = q.top();
             q.pop();
-
-            pair<int, int> u = u_node.first;
-            int u_w = u_node.second;
             
-            if(u_w > w[u.first][u.second]) continue;
+            if(wu > w[{u, tu}]) continue;
             
-            for(const pair<pair<int, int>, int>& node : g[u.first][u.second]) {
-                int v = node.first.first;
-                int tv = node.first.second;
-
+            for(const auto& [v, tv, wv] : g[{u, tu}]) {
                 if(tv > tw) continue;
-                if(w[v].find(tv) != w[v].end() && w[v][tv] <= w[u.first][u.second] + node.second) continue;
+                if(w.find({v, tv}) != w.end() && w[{v, tv}] <= w[{u, tu}] + wv) continue;
 
-                w[v][tv] = w[u.first][u.second] + node.second;
-                if(w[v][tv] < t[v]) {
-                    t[v] = w[v][tv];
-                    pre[v] = u.first;
+                w[{v, tv}] = w[{u, tu}] + wv;
+                if(w[{v, tv}] < t[v]) {
+                    t[v] = w[{v, tv}];
+                    pre[v] = u;
                 }
-                q.push({{v, tv}, w[v][tv]});
+                q.push({v, tv, w[{v, tv}]});
             }
         }
 

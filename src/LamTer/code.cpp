@@ -161,15 +161,38 @@ public:
 int main(int argc, char** argv) {
 	std::ios_base::sync_with_stdio(0); std::cin.tie(nullptr);
 
-	int n, m; std::cin >> n >> m;
 	EdgeStream stream;
-	for (int T = m; T--; ) {
-		int u, v, s, e; std::cin >> u >> v >> s >> e;
-		u -= 1, v -= 1;
-		stream.add_edge(u, v, s, e);
+	// Input section
+	std::unordered_set<int> vertices;
+	std::fstream fin("../../raw/ca-cit-HepPh/out.ca-cit-HepPh", std::ios::in);
+
+	std::string line;
+    while(getline(fin, line)) {
+        if(!line.empty() && line[0] == '%') continue; // skipping comment line
+        
+        std::stringstream ss(line);
+		int u, v, s, e;
+        if(ss >> u >> v >> e >> s) {
+			u -= 1, v -= 1;
+			stream.add_edge(u, v, s, e);
+			vertices.insert(u);
+			vertices.insert(v);
+        }
+    }
+	fin.close();
+	// End input
+
+	Graph G(vertices.size(), stream);
+
+	std::vector<int> t = G.compute_foremost_time(0, 0, INT_MAX);
+
+	// Output section
+	std::fstream fout("../../res/res.out", std::ios::out);
+	for(int i=0;i<vertices.size();++i) {
+		fout << i+1 << ": " << t[i] << "\n";
 	}
-	int ta, tb; std::cin >> ta >> tb;
-	Graph G(n, stream);
+	fout.close();
+	// End output
 
 	return 0;
 }
