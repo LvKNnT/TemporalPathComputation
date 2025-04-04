@@ -1,6 +1,6 @@
 # Input format
 - First line contains two integers n and m representing the number of vertices and edges
-- The next m lines, the i-th line contains 4 number ui, vi, tbi, tei
+- The next m lines, the i-th line contains 4 number ui, vi, ti, di
 - The last line contains two number talpha, tomega.
 
 # Output format
@@ -8,3 +8,8 @@
 
 # Index
 - Assume that index start from 1.
+
+# Constraint
+- n, m < 10^6
+- di > 0
+- talpha, tomega, ti < INT_MAX
