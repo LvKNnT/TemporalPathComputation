@@ -135,6 +135,7 @@ signed main() {
     // get starting vertex, begin time and end time
     int x, ta, tw;
     cin >> x >> ta >> tw;
+    --x;
 
     for(int i=0; i<m; ++i) {
         int u, v, t, d;
