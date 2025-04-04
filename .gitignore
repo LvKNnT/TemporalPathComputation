@@ -39,4 +39,9 @@ Data/
 raw/
 testcase/
 log/
-distance/
+eYAP/
+old_src/
+solution/
+testcase/
+build/
+res/
