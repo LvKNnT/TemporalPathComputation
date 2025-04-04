@@ -1,7 +1,7 @@
 # Input format
 - First line contains two integers n and m representing the number of vertices and edges
+- The next line contains two number start, talpha, tomega.
 - The next m lines, the i-th line contains 4 number ui, vi, ti, di
-- The last line contains two number talpha, tomega.
 
 # Output format
 - One line contains n integers, the i-th integers representing the answer for the i-th vertex.
