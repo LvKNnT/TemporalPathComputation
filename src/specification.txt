@@ -5,6 +5,7 @@
 
 # Output format
 - One line contains n integers, the i-th integers representing the answer for the i-th vertex.
+- If there is no path, print -1.
 
 # Index
 - Assume that index start from 1.
@@ -12,4 +13,5 @@
 # Constraint
 - n, m < 10^6
 - di > 0
+- ti in input is sort in ascending order
 - talpha, tomega, ti < INT_MAX

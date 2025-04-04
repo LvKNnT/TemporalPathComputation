@@ -13,9 +13,9 @@ int main(void) {
 		int u, v, t, d; std::cin >> u >> v >> t >> d;
 		u -= 1, v -= 1;
 		if (ans[u] <= t and t + d <= t_max) {
-			ans[v] = std::min(ans[v], ans[u] + d);
+			ans[v] = std::min(ans[v], t + d);
 		}
-		if (t_max < t) {
+		if (t_max <= t) {
 			break;
 		}
 	}
