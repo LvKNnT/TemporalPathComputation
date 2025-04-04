@@ -47,77 +47,80 @@ namespace TransformingGraph {
         }
     }
 
+    struct Compare {
+        bool operator()(const tuple<int, int, int>& a, const tuple<int, int, int>& b) const {
+            if(get<2>(a) == get<2>(b)) return get<0>(a) < get<0>(b);
+            return get<2>(a) > get<2>(b);
+        }
+    };
+
     // Need transforming graph to work
-    vector<int> ComputingFastestTime(int x, int ta, int tw) {
-        // weight
+    vector<int> ComputingShortestTime(int x, int ta, int tw) {
         vector<int> t(n, INT_MAX);
         t[x] = 0;
 
-        queue<tuple<int, int> > q;
-        map<pair<int, int>, bool> vis;
-        for(vector<int>::iterator it = upper_bound(outs[x].begin(), outs[x].end(), tw); it != outs[x].begin();) {
-            --it;
-            q.push({x, *it});
-            vis[{x, *it}] = true;
+        priority_queue<tuple<int, int, int>, vector<tuple<int, int, int> >, Compare> q;
+        map<pair<int, int>, int> w;
+        for(vector<int>::iterator it = lower_bound(outs[x].begin(), outs[x].end(), ta); it != outs[x].end() && *it <= tw; ++it) {
+            q.push({x, *it, 0});
+            w[{x, *it}] = 0;
+        }
 
-            int cur_ta = *it;
-            while(!q.empty()) {
-                const auto& [u, tu] = q.front();
-                
-                for(const auto& [v, tv, w_v] : g[{u, tu}]) {
-                    if(tv > tw) continue;
-                    if(vis.find({v, tv}) != vis.end()) continue;
-                    
-                    if(tv - cur_ta < t[v]) {
-                        t[v] = tv - cur_ta;
-                    }
-                    vis[{v, tv}] = true;
-                    q.push({v, tv});
+        while(!q.empty()) {
+            const auto [u, tu, wu] = q.top();
+            q.pop();
+            
+            if(wu > w[{u, tu}]) continue;
+            
+            for(const auto& [v, tv, wv] : g[{u, tu}]) {
+                if(tv > tw) continue;
+                if(w.find({v, tv}) != w.end() && w[{v, tv}] <= w[{u, tu}] + wv) continue;
+
+                w[{v, tv}] = w[{u, tu}] + wv;
+                if(w[{v, tv}] < t[v]) {
+                    t[v] = w[{v, tv}];
                 }
-
-                q.pop();
+                q.push({v, tv, w[{v, tv}]});
             }
         }
+
         return t;
     }
 
-    // Need transforming graph to work
-    vector<int> GetFastestPath(int x, int ta, int tw) {
-        // weight
+    vector<int> GetShortestTime(int x, int ta, int tw) {
         vector<int> t(n, INT_MAX);
         t[x] = 0;
 
         vector<int> p(n, -1);
         p[x] = x;
 
-        queue<tuple<int, int> > q;
-        map<pair<int, int>, bool> vis;
-        for(vector<int>::iterator it = upper_bound(outs[x].begin(), outs[x].end(), tw); it != outs[x].begin();) {
-            --it;
-            q.push({x, *it});
-            vis[{x, *it}] = true;
+        priority_queue<tuple<int, int, int>, vector<tuple<int, int, int> >, Compare> q;
+        map<pair<int, int>, int> w;
+        for(vector<int>::iterator it = lower_bound(outs[x].begin(), outs[x].end(), ta); it != outs[x].end() && *it <= tw; ++it) {
+            q.push({x, *it, 0});
+            w[{x, *it}] = 0;
+        }
 
-            int cur_ta = *it;
-            while(!q.empty()) {
-                const auto& [u, tu] = q.front();
-                
-                for(const auto& [v, tv, w_v] : g[{u, tu}]) {
-                    if(tv > tw) continue;
-                    if(vis.find({v, tv}) != vis.end()) continue;
-                    
-                    if(tv - cur_ta < t[v]) {
-                        p[v] = u;
-                        t[v] = tv - cur_ta;
-                    }
-                    vis[{v, tv}] = true;
-                    q.push({v, tv});
+        while(!q.empty()) {
+            const auto [u, tu, wu] = q.top();
+            q.pop();
+            
+            if(wu > w[{u, tu}]) continue;
+            
+            for(const auto& [v, tv, wv] : g[{u, tu}]) {
+                if(tv > tw) continue;
+                if(w.find({v, tv}) != w.end() && w[{v, tv}] <= w[{u, tu}] + wv) continue;
+
+                w[{v, tv}] = w[{u, tu}] + wv;
+                if(w[{v, tv}] < t[v]) {
+                    p[v] = u;
+                    t[v] = w[{v, tv}];
                 }
-
-                q.pop();
+                q.push({v, tv, w[{v, tv}]});
             }
         }
 
-        return p;
+        return t;
     }
 }
 
@@ -147,8 +150,8 @@ signed main() {
 
     TransformingGraph::GenerateGraph(n, g);
 
-    vector<int> f = TransformingGraph::ComputingFastestTime(x, ta, tw);
-    vector<int> path = TransformingGraph::GetFastestPath(x, ta, tw);
+    vector<int> f = TransformingGraph::ComputingShortestTime(x, ta, tw);
+    vector<int> path = TransformingGraph::GetShortestTime(x, ta, tw);
 
     for(int i=0; i<n; ++i) {
         cout << (f[i] == INT_MAX ? -1 : f[i]) << " \n"[i+1 == n];
