@@ -151,7 +151,7 @@ signed main() {
     TransformingGraph::GenerateGraph(n, g);
 
     vector<int> f = TransformingGraph::ComputingShortestTime(x, ta, tw);
-    vector<int> path = TransformingGraph::GetShortestTime(x, ta, tw);
+    // vector<int> path = TransformingGraph::GetShortestTime(x, ta, tw);
 
     for(int i=0; i<n; ++i) {
         cout << (f[i] == INT_MAX ? -1 : f[i]) << " \n"[i+1 == n];

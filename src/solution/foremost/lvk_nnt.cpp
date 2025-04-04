@@ -77,7 +77,7 @@ signed main() {
     GenerateGraph(g);
 
     vector<int> f = ComputingForemostTime(n, g, x, ta, tw);
-    vector<int> path = GetForemostPath(n, g, x, ta, tw);
+    // vector<int> path = GetForemostPath(n, g, x, ta, tw);
 
     for(int i=0; i<n; ++i) {
         cout << (f[i] == INT_MAX ? -1 : f[i]) << " \n"[i+1 == n];
