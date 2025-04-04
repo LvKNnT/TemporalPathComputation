@@ -73,6 +73,7 @@ signed main() {
     for(int i=0; i<m; ++i) {
         int u, v, t, d;
         cin >> u >> v >> t >> d;
+        --u, --v;
         g.push_back({u, v, t, d});
     }
 
