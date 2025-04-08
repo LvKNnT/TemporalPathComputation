@@ -43,7 +43,7 @@ public:
             }
         }
 
-        for(int j = lst.size() - 1; j >= 0 && lst[j].first >= a.first; --j) {
+        for(int j = lst.size() - 1; j >= 0 && lst[j].first <= a.first; --j) {
             if(IsDominatedShort(a, lst[j])) {
                 lst.erase(lst.begin() + j);
             }
