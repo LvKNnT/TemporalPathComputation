@@ -16,7 +16,7 @@ int main(void) {
 			ans[v] = std::min(ans[v], t + d);
 		}
 		if (t_max <= t) {
-			break;
+			continue;
 		}
 	}
 	for (int i = 0; i < N; i += 1) {
