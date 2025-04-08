@@ -72,20 +72,48 @@ public:
     }
 
     bool IsDominatedFast(const pair<int, int>& u, const pair<int, int>& v) {
+        // Given u and v. 
+        // U dominated V if
+        // v.first <= u.first && u.second <= v.second
         return (u.first >= v.first && u.second <= v.second);
     }
     
     void AddFast(const pair<int, int>& a) {
+        // Given: an optimized sorted list to maintain efficiency  
+        // Observation: The list is sorted in increasing order for both 'first' and 'second' values  
+        // Example: {1, 5}, {2, 7}, {3, 9}  
+        // When and Where we can consider putting new element in this list?
+        // Note that: Only subsequent elements can eliminate previous elements  
+
+        // Check if the new element 'a' is dominated by any existing element  
         int i = lst.size() - 1;
         for(; i >= 0 && lst[i].first >= a.first; --i) {
+            // If an existing element dominates 'a', 'a' is not suitable for insertion
             if(IsDominatedFast(lst[i], a)) {
                 return;
             }
         }
+
+        // At this point, 'a' is *not* dominated and can be safely inserted  
+        // Explanation:  
+        // - If 'b' dominates 'c' and 'c' dominates 'd', then 'b' also dominates 'd'.  
+        // - If any previous element could dominate 'a', it would also dominate later elements,  
+        //   which contradicts our sorted structure.  
+        // - Thus, 'a' is guaranteed to be greater than or equal to any remaining elements.
+
+        for(int j = lst.size() - 1; j >= 0 && lst[j].first >= a.first; --j) {
+            if(IsDominatedFast(a, lst[j])) {
+                lst.erase(lst.begin() + j);
+            }
+        }
+
+        // Insert 'a' at the appropriate position  
         lst.emplace(lst.begin() + i + 1, a);
+
+        // Remove elements that are now dominated by 'a'
         for(; i >= 0; --i) {
             if(IsDominatedFast(a, lst[i])) lst.erase(lst.begin() + i);
-            else break;
+            else break; // Stop when encountering a non-dominated element
         }
     }
 };

@@ -42,6 +42,12 @@ public:
                 return;
             }
         }
+
+        for(int j = lst.size() - 1; j >= 0 && lst[j].first >= a.first; --j) {
+            if(IsDominatedShort(a, lst[j])) {
+                lst.erase(lst.begin() + j);
+            }
+        }
         lst.emplace(lst.begin() + i + 1, a);
         for(; i >= 0; --i) {
             if(IsDominatedShort(a, lst[i])) lst.erase(lst.begin() + i);
