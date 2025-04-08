@@ -63,7 +63,7 @@ signed main() {
     int n, m;
     cin >> n >> m;
 
-    // the graph with 4 tuple: u (satarting vertex), v (ending vertex), ta(begin time), tw(length of path)
+    // the graph with 4 tuple: u (starting vertex), v (ending vertex), ta(begin time), tw(length of path)
     vector<tuple<int, int, int, int> > g;
 
     // get starting vertex, begin time and end time
