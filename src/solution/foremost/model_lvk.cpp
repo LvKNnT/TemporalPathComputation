@@ -27,29 +27,6 @@ vector<int> ComputingForemostTime(const int& n, const vector<tuple<int, int, int
     return t;
 }
 
-// earliest-arrival path
-vector<int> GetForemostPath(const int& n, const vector<tuple<int, int, int, int> >& g, const int& x, const int& ta, const int& tw) {
-    vector<int> t(n, INT_MAX);
-    t[x] = ta;
-
-    vector<int> p(n, -1);
-    p[x] = x;
-
-    for (const auto& [u, v, t_edge, w_edge] : g) {
-        if(t_edge + w_edge <= tw && t_edge >= t[u]) {
-            if(t_edge + w_edge < t[v]) {
-                p[v] = u;
-                t[v] = t_edge + w_edge;
-            }
-        }
-        else if(t_edge >= tw) {
-            break;
-        }
-    }
-
-    return p;
-}
-
 signed main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
@@ -77,7 +54,6 @@ signed main() {
     GenerateGraph(g);
 
     vector<int> f = ComputingForemostTime(n, g, x, ta, tw);
-    // vector<int> path = GetForemostPath(n, g, x, ta, tw);
 
     for(int i=0; i<n; ++i) {
         cout << (f[i] == INT_MAX ? -1 : f[i]) << " \n"[i+1 == n];

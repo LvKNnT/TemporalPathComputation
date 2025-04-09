@@ -56,10 +56,13 @@ public:
     }
 };
 
-// shortest distance
-vector<int> ComputingShortestTime(const int& n, const vector<tuple<int, int, int, int> >& g, const int& x, const int& ta, const int& tw) {
+// shortest path
+vector<int> GetShortestPath(const int& n, const vector<tuple<int, int, int, int> >& g, const int& x, const int& ta, const int& tw) {
     vector<int> f(n, INT_MAX);
     f[x] = 0;
+
+    vector<int> p(n, -1);
+    p[x] = x;
     
     vector<SortedList> L(n);
 
@@ -78,11 +81,37 @@ vector<int> ComputingShortestTime(const int& n, const vector<tuple<int, int, int
             L[v].AddShort(cur); // Including the comparison section
 
             if(cur.first < f[v]) {
+                p[v] = u;
                 f[v] = cur.first;
             }
         }
         else if(t_edge >= tw) {
             break;
+        }
+    }
+
+    return p;
+}
+
+// Retrieve the path from the parent list in O(nlogn)
+vector<vector<int> > ComputingPath(const int& n, const vector<int>& path) {
+    vector<vector<int> > f(n, vector<int> (0));
+    vector<int> visited(n, 0);
+
+    function<void(int)> dfs = [&](int node) {
+        if (visited[node]) return;
+        visited[node] = 1;
+
+        if (path[node] != -1 && node != path[node]) {
+            dfs(path[node]);
+            f[node] = f[path[node]];
+        }
+        f[node].push_back(node);
+    };
+
+    for (int i = 0; i < n; ++i) {
+        if (!visited[i] && path[i] != -1) {
+            dfs(i);
         }
     }
 
@@ -115,9 +144,18 @@ signed main() {
 
     GenerateGraph(g);
 
-    vector<int> f = ComputingShortestTime(n, g, x, ta, tw);
+    vector<int> path = GetShortestPath(n, g, x, ta, tw);
+    vector<vector<int> > f = ComputingPath(n, path);
 
     for(int i=0; i<n; ++i) {
-        cout << (f[i] == INT_MAX ? -1 : f[i]) << " \n"[i+1 == n];
+        if(f[i].empty()) {
+            cout << "-1\n";
+            continue;
+        }
+
+        cout << f[i].size() << " ";
+        for(int j=0; j<f[i].size(); ++j) {
+            cout << f[i][j] << " \n"[j+1 == f[i].size()];
+        }
     }
 }
