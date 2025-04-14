@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
 		int v = inf.readInt(1, n);
 		inf.readSpace();
 		ensuref(u != v, "Edge traveling to itself");
-		int t = inf.readInt(1, MAX_T);
+		int t = inf.readInt(0, MAX_T);
 		inf.readSpace();
 		int d = inf.readInt(1, MAX_T);
 		inf.readEoln();
