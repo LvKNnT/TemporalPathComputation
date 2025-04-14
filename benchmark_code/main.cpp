@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 #include <random>
+#include <functional>
 
 #include <filesystem>
 #include "StreamPresentation.h"
@@ -81,7 +82,7 @@ void ClearGraph() {
     hasher.Clear();
 }
 
-void output(const string& path, const vector<int>& f) {
+void output_d(const string& path, const vector<int>& f) {
     fstream fout(path, ios::out);
 
     map<int, int> mp;
@@ -89,7 +90,7 @@ void output(const string& path, const vector<int>& f) {
         mp[stoi(hasher.GetString(i))] = f[i];
     }
     for(const pair<int, int>& v : mp) {
-        fout << v.first << ": " << v.second << "\n";
+        fout << v.first << ": " << (v.second != INT_MAX ? v.second : -1) << "\n";
     }
     fout << "\n";
 
@@ -98,37 +99,76 @@ void output(const string& path, const vector<int>& f) {
 
 void output_distance(const string& path, const string& target, const int& ta, const int& tw) {
     vector<int> f = StreamPresentation::ComputingForemostTime(hasher.GetId(target), ta, tw);
-    output(path + "/foremost.txt", f);
+    output_d(path + "/foremost.txt", f);
 
     f = StreamPresentation::ComputingReverseForemostTime(hasher.GetId(target), ta, tw);
-    output(path + "/reverseforemost.txt", f);
+    output_d(path + "/reverseforemost.txt", f);
 
     f = StreamPresentation::ComputingFastestPathDuration(hasher.GetId(target), ta, tw);
-    output(path + "/fastest.txt", f);
+    output_d(path + "/fastest.txt", f);
 
     f = StreamPresentation::ComputingShortestPathDistance(hasher.GetId(target), ta, tw);
-    output(path + "/shortest.txt", f);
+    output_d(path + "/shortest.txt", f);
 }
 
-void output_path(fstream& fout, const vector<int>& parents) {
-    int n = hasher.GetSize();
-    
-    map<string, map<string, bool> > adj_list;
+// Retrieve the path from the parent list in O(nlogn)
+vector<vector<int> > ComputingPath(const int& n, const vector<int>& path) {
+    vector<vector<int> > f(n, vector<int> (0));
+    vector<int> visited(n, 0);
 
-    for(int i=0;i<n;++i) {
-        if(parents[i] == -1) continue;
+    function<void(int)> dfs = [&](int node) {
+        if (visited[node]) return;
+        visited[node] = 1;
 
-        adj_list[hasher.GetString(parents[i])][hasher.GetString(i)] = true;
+        if (path[node] != -1 && node != path[node]) {
+            dfs(path[node]);
+            f[node] = f[path[node]];
+        }
+        f[node].push_back(node);
+    };
+
+    for (int i = 0; i < n; ++i) {
+        if (!visited[i] && path[i] != -1) {
+            dfs(i);
+        }
     }
 
-    for(const pair<string, map<string, bool> >& adj : adj_list) {
-        fout << adj.first << ": ";
+    return f;
+}
 
-        for(const pair<string, bool>& a : adj.second) {
-            fout << a.first << " ";
+void output_p(const string& path, const vector<vector<int> >& f) {
+    fstream fout(path, ios::out);
+
+    map<int, vector<int> > mp;
+    for(int i = 0; i < hasher.GetSize(); ++i) {
+        mp[stoi(hasher.GetString(i))] = f[i];
+    }
+    for(const pair<int, vector<int> >& v : mp) {
+        fout << v.first << ": ";
+        for(int i = 0; i < v.second.size(); ++i) {
+            fout << hasher.GetString(v.second[i]) << " ";
         }
+        if(v.second.empty()) fout << "-1";
         fout << "\n";
     }
+}
+
+void output_path(const string& path, const string& target, const int& ta, const int& tw) {
+    vector<int> f = StreamPresentation::GetForemostTimePath(hasher.GetId(target), ta, tw);
+    vector<vector<int> > p = ComputingPath(hasher.GetSize(), f); 
+    output_p(path + "/foremost.txt", p);
+
+    f = StreamPresentation::GetReverseForemostPath(hasher.GetId(target), ta, tw);
+    p = ComputingPath(hasher.GetSize(), f);
+    output_p(path + "/reverseforemost.txt", p);
+
+    f = StreamPresentation::GetFastestPath(hasher.GetId(target), ta, tw);
+    p = ComputingPath(hasher.GetSize(), f);
+    output_p(path + "/fastest.txt", p);
+
+    f = StreamPresentation::GetShortestPath(hasher.GetId(target), ta, tw);
+    p = ComputingPath(hasher.GetSize(), f);
+    output_p(path + "/shortest.txt", p);
 }
 
 // Show the difference between f and ff
@@ -484,7 +524,8 @@ bool checkAccurate(const string& target, const int& ta, const int& tw, fstream& 
 }
 
 signed main() {
-    const std::string DISTANCE_PATH = "../distance/";
+    const std::string DISTANCE_PATH = "../solution/distance/";
+    const std::string PATH_PATH = "../solution/path/";
     // const std::string DATA_PATH = "../raw/";
     // const std::string DATA_PATH = "../raw/ca-cit-HepPh/";
     // const std::string DATA_PATH = "../raw/youtube-u-growth/";
@@ -525,15 +566,15 @@ signed main() {
                 char16_t* randomNodePtr = new char16_t;
                 const int64_t RNGcode = (int64_t) randomNodePtr;
                 delete randomNodePtr;
-                */
                 
                 const int RNGcode = 2703;
                 fout << "Random nodes: " << randomNode << "\n";
                 fout << "RNG code: " << RNGcode << "\n";
-
+                
                 if(checkAccurate("1", 0, INT_MAX, fin, fout)) {
                     testRandomNodes(randomNode, RNGcode, fin, fout);
                 }
+                */
                 
                 /*
                 // Test for random nodes
@@ -546,9 +587,11 @@ signed main() {
                 */
                 
                 /*
+                */
                 // Output distance
                 output_distance(DISTANCE_PATH + entry.path().parent_path().filename().string(), "1", 0, INT_MAX);
-                */
+                // Output path 
+                output_path(PATH_PATH + entry.path().parent_path().filename().string(), "1", 0, INT_MAX);
 
                 ClearGraph();
                 

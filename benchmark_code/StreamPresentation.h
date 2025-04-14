@@ -263,6 +263,44 @@ namespace StreamPresentation {
         return f;
     }
 
+    // fastest path
+    vector<int> GetFastestPath(const int& x, const int& ta, const int& tw) {
+        const int n = hasher.GetSize();
+
+        vector<int> f(n, INT_MAX);
+        f[x] = 0;
+
+        vector<int> p(n, -1);
+        p[x] = x;
+
+        vector<SortedList> L(n);
+
+        for(const auto& [u, v, t_edge, w_edge] : g) {
+            if(t_edge >= ta && t_edge + w_edge <= tw) {
+                if(u == x) {
+                    L[x].AddFast({t_edge, t_edge});
+                }
+
+                pair<int, int> cur = L[u].UpperBound(t_edge);
+                if(cur.first == -1) continue;
+                
+                cur.second = t_edge + w_edge;
+
+                L[v].AddFast(cur);
+                
+                if(cur.second - cur.first < f[v]) {
+                    p[v] = u;
+                    f[v] = cur.second - cur.first;
+                }
+            }
+            else if(t_edge >= tw) {
+                break;
+            }
+        }
+
+        return p;
+    }
+
     // shortest-path distance
     vector<int> ComputingShortestPathDistance(const int& x, const int& ta, const int& tw) {
         int n = hasher.GetSize();
@@ -296,5 +334,44 @@ namespace StreamPresentation {
         }
 
         return f;
+    }
+
+    // shortest path
+    vector<int> GetShortestPath(const int& x, const int& ta, const int& tw) {
+        const int n = hasher.GetSize();
+        
+        vector<int> f(n, INT_MAX);
+        f[x] = 0;
+
+        vector<int> p(n, -1);
+        p[x] = x;
+        
+        vector<SortedList> L(n);
+
+        for(const auto& [u, v, t_edge, w_edge] : g) {
+            if(t_edge >= ta && t_edge + w_edge <= tw) {
+                if(u == x) {
+                    L[x].AddShort({0, t_edge});
+                }
+
+                pair<int, int> cur = L[u].UpperBound(t_edge);
+                if(cur.first == -1) continue; // nothing suitable
+
+                cur.first += w_edge;
+                cur.second = t_edge + w_edge;
+
+                L[v].AddShort(cur); // Including the comparison section
+
+                if(cur.first < f[v]) {
+                    p[v] = u;
+                    f[v] = cur.first;
+                }
+            }
+            else if(t_edge >= tw) {
+                break;
+            }
+        }
+
+        return p;
     }
 }
