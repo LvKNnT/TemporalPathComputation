@@ -530,7 +530,7 @@ signed main() {
     // const std::string DATA_PATH = "../raw/ca-cit-HepPh/";
     // const std::string DATA_PATH = "../raw/youtube-u-growth/";
     // const std::string DATA_PATH = "../raw/dblp_coauthor/";
-    const std::string DATA_PATH = "../Data/datasets/";
+    const std::string DATA_PATH = "../Data/";
     const std::string OUT_PATH = "../res/res.out";
 
     // Access to output
