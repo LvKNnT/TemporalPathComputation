@@ -68,7 +68,7 @@ int main(void) {
 		assert(s <= a);
 		if (s == -1 and a == -1)
 			continue;
-		a += l;
+		a = t + l;
 		L[v].insert(s, a);
 		ans[v] = std::min(a - s, ans[v]);
 		if (t >= t_max) {

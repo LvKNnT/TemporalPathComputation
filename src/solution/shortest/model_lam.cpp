@@ -73,7 +73,7 @@ int main(void) {
 		d *= -1;
 		a *= -1;
 		d += l;
-		a += l;
+		a = t + l;
 		L[v].insert(d, a);
 		ans[v] = std::min(d, ans[v]);
 		if (t >= t_max) {
