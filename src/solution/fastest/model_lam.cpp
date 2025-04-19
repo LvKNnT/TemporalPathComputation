@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 
-const int INF = 1E9 + 7;
+const int INF = 2E9 + 7;
 
 class MonotonicMap {
 private:
@@ -23,10 +23,13 @@ public:
 			mapB.erase(old_b);
 			itA->second = b;
 		}
-		for (auto jt = std::next(itA); jt != mapA.end() and jt->second <= b; ) {
-			mapB.erase(jt->second);
-			jt = mapA.erase(jt);
-		}
+		mapB[b] = a;
+		auto jt = std::next(itA);
+		if (jt != mapA.end())
+			itA = jt;
+
+		b = itA->second;
+
 		while (itA != mapA.begin()) {
 			auto kt = std::prev(itA);
 			if (kt->second < b)
@@ -34,7 +37,7 @@ public:
 			mapB.erase(kt->second);
 			mapA.erase(kt);
 		}
-		mapB[b] = a;
+		assert(mapA.size() == mapB.size());
 		return true;
 	}
 
