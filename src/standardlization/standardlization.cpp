@@ -25,26 +25,18 @@ bool ModGraph(fstream& fin, fstream& fout) {
         return false;
     }
 
-    const int INF = 2e9;
-
     vector<tuple<int, int, int, int> > g;
 
     for(int i=0;i<m;++i) {
         int u, v;
         float ta, tw;
         fin >> u >> v >> ta >> tw;
-        if(ta < 0) {
-            ta = -ta;
-        }
         if(tw < 0) {
             tw = -tw;
         }
-        if(ta > INF) {
-            cerr << "ta > INF\n";
-            return false;
-        }
-        if(ta + tw > INF) {
-            tw = INF - ta;
+
+        if(ta > INT_MAX - tw) {
+            tw = INT_MAX - ta;
         }
 
         g.push_back({u, v, static_cast<int>(ta), static_cast<int>(tw)});
