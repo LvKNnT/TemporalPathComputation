@@ -23,7 +23,7 @@ int main(void) {
 			break;
 		}
 		if (t + d <= ans[v]) {
-			ans[u] = t;
+			ans[u] = std::min(ans[u], t);
 		}
 	}
 	for (int i = 0; i < N; i += 1) {
