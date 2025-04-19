@@ -11,24 +11,54 @@ Mostly change all the negative weight to positive weight.
 Change float weight to int weight.
 */
 
-const string input_path = "../../old_data";
-const string output_path = "../../Data";
+const string input_path = "../../Data";
+const string output_path = "../../Themis/Data";
 
-void ModGraph(fstream& fin, fstream& fout) {
+bool ModGraph(fstream& fin, fstream& fout) {
     int n, m;
     fin >> n >> m;
     fout << n << " " << m << "\n";
+
+    // first constrant
+    if(n > 1000000 || m > 1000000) {
+        cerr << "n|m > 1000000\n";
+        return false;
+    }
+
+    const int INF = 2e9;
+
+    vector<tuple<int, int, int, int> > g;
 
     for(int i=0;i<m;++i) {
         int u, v;
         float ta, tw;
         fin >> u >> v >> ta >> tw;
+        if(ta < 0) {
+            ta = -ta;
+        }
         if(tw < 0) {
             tw = -tw;
         }
+        if(ta > INF) {
+            cerr << "ta > INF\n";
+            return false;
+        }
+        if(ta + tw > INF) {
+            tw = INF - ta;
+        }
 
-        fout << u << " " << v << " " << int(ta) << " " << int(tw) << "\n";
+        g.push_back({u, v, static_cast<int>(ta), static_cast<int>(tw)});
     }
+
+    stable_sort(g.begin(), g.end(), [](const auto& a, const auto& b) {
+        return get<2>(a) < get<2>(b);
+    });
+
+    for(const auto& [u, v, ta, tw] : g) {
+        fout << u << " " << v << " " << ta << " " << tw << "\n";
+    }
+
+    return true;
 }
 
 signed main() {
@@ -56,7 +86,14 @@ signed main() {
                 }
                 fstream fout(out_file_path, ios::out);
 
-                ModGraph(fin, fout);
+                if(ModGraph(fin, fout) == false) {
+                    cerr << "ModGraph failed!\n";
+                    fout.close();
+
+                    fs::remove_all(out_subdir); // remove the subdir
+
+                    continue;
+                }
 
                 fin.close();
                 fout.close();

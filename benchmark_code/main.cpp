@@ -90,7 +90,7 @@ void ClearGraph() {
     hasher.Clear();
 }
 
-void output_d(const string& path, const vector<int>& f) {
+void output_d(const string& path, const vector<int>& f, bool rev) {
     fstream fout(path, ios::out);
 
     map<int, int> mp;
@@ -98,7 +98,12 @@ void output_d(const string& path, const vector<int>& f) {
         mp[stoi(hasher.GetString(i))] = f[i];
     }
     for(const pair<int, int>& v : mp) {
-        fout << v.first << ": " << (v.second != INT_MAX ? v.second : -1) << "\n";
+        if(rev) {
+            fout << v.first << ": " << (v.second != INT_MIN ? v.second : -1) << "\n";
+        }
+        else {
+            fout << v.first << ": " << (v.second != INT_MAX ? v.second : -1) << "\n";
+        }
     }
     fout << "\n";
 
@@ -107,16 +112,16 @@ void output_d(const string& path, const vector<int>& f) {
 
 void output_distance(const string& path, const string& target, const int& ta, const int& tw) {
     vector<int> f = StreamPresentation::ComputingForemostTime(hasher.GetId(target), ta, tw);
-    output_d(path + "/foremost.txt", f);
+    output_d(path + "/foremost.txt", f, false);
 
     f = StreamPresentation::ComputingReverseForemostTime(hasher.GetId(target), ta, tw);
-    output_d(path + "/reverseforemost.txt", f);
+    output_d(path + "/reverseforemost.txt", f, false);
 
     f = StreamPresentation::ComputingFastestPathDuration(hasher.GetId(target), ta, tw);
-    output_d(path + "/fastest.txt", f);
+    output_d(path + "/fastest.txt", f, false);
 
     f = StreamPresentation::ComputingShortestPathDistance(hasher.GetId(target), ta, tw);
-    output_d(path + "/shortest.txt", f);
+    output_d(path + "/shortest.txt", f, false);
 }
 
 // Retrieve the path from the parent list in O(nlogn)
@@ -544,13 +549,14 @@ void testGenerator(fstream& ftest, fstream& fsolution, const int k) {
         ftest << hasher.GetString(u) << " " << hasher.GetString(v) << " " << ta << " " << tw << "\n";
     }
 
+    const int INF = 2e9;
     vector<int> f = StreamPresentation::ComputingReverseForemostTime(node, ta, tw);
     vector<int> ans(hasher.GetFixedId(), INT_MIN);
     for(int i = 0; i < hasher.GetSize(); ++i) {
         ans[stoi(hasher.GetString(i)) - 1] = f[i];
     }
     for(const int& v : ans) {
-        fsolution  << (v != INT_MIN ? v : -1) << " ";
+        fsolution  << (v >= -INF ? v : -1) << " ";
     }
 }
 
@@ -561,11 +567,9 @@ signed main() {
     // const std::string DATA_PATH = "../raw/ca-cit-HepPh/";
     // const std::string DATA_PATH = "../raw/youtube-u-growth/";
     // const std::string DATA_PATH = "../raw/dblp_coauthor/";
-    const std::string DATA_PATH = "../Data/";
+    const std::string DATA_PATH = "../Themis/Data/";
     const std::string TEST_PATH = "../Themis/Tasks/reverseforemost/";
     const std::string OUT_PATH = "../res/res.out";
-
-    for(int i=0;i<10;++i) {
 
     // Access to output
     fstream fout(OUT_PATH, ios::out);
@@ -607,13 +611,13 @@ signed main() {
                     ClearGraph();
                     fin.close();
                     continue;
-                    }
+                }
                     
+                /*
                 if(checkAccurate("1", 0, INT_MAX, fin, fout)) {
                     testRandomNodes(randomNode, RNGcode, fin, fout);
                 }   
                         
-                /*
                 // Test for random nodes
                 testRandomNodes(randomNode, RNGcode, fin, fout);
                 
@@ -622,12 +626,13 @@ signed main() {
                 // Check for accuracy
                 checkAccurate("1", 0, INT_MAX, fin, fout);
                 */
-                
+               
                 /*
                 // Output distance
                 output_distance(DISTANCE_PATH + entry.path().parent_path().filename().string(), "1", 0, INT_MAX);
                 // Output path 
                 output_path(PATH_PATH + entry.path().parent_path().filename().string(), "1", 0, INT_MAX);
+                */
                 
                 // Test generator for themis
                 
@@ -659,7 +664,6 @@ signed main() {
                     testFileStream.close();
                     solutionFileStream.close();
                 }
-                */
                 
                 ClearGraph();
                 
@@ -673,9 +677,7 @@ signed main() {
 
     fout.close();
 
-    createLog(OUT_PATH);
-
-    }
+    // createLog(OUT_PATH);
 
     return 0;
 }

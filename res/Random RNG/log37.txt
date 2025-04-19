@@ -1,0 +1,576 @@
+Random nodes: 100
+RNG code: 6016464384
+Current file: "out.ca-cit-HepPh"
+Generating graph...
+getting graph: 0.869058 seconds.
+generating streaming graph: 0.197382 seconds.
+generating transforming graph: 2.48084 seconds.
+Total time: 3.54732 seconds.
+Stream vectice count: 28093
+Stream edges count: 4596803
+Transforming vectice count: 397893
+Transforming edges count: 5116013
+Foremost!
+1-pass graph: 0.00530217 seconds.
+Transforming graph: 0.0318331 seconds.
+Correct!
+Reverse-Foremost!
+1-pass graph: 0.00460005 seconds.
+Transforming graph: 9.933e-06 seconds.
+Correct!
+Fastest!
+1-pass graph: 0.0151234 seconds.
+Transforming graph: 0.0275619 seconds.
+Correct!
+Shortest!
+1-pass graph: 0.0136009 seconds.
+Transforming graph: 0.0523802 seconds.
+Correct!
+Test Accurate time measured: 0.150459 seconds.
+
+Average time for 100 random inputs:
+Streaming graph:
+Foremost: 0.00428315 seconds.
+Reverse-Foremost: 0.00537228 seconds.
+Fastest: 0.00666161 seconds.
+Shortest: 0.00638123 seconds.
+Transforming graph:
+Foremost: 0.00334255 seconds.
+Reverse-Foremost: 0.0065775 seconds.
+Fastest: 0.00314621 seconds.
+Shortest: 0.00603759 seconds.
+Test Random Nodes time measured: 4.18033 seconds.
+
+Current file: "out.dblp_coauthor"
+Generating graph...
+getting graph: 6.73669 seconds.
+generating streaming graph: 1.25857 seconds.
+generating transforming graph: 36.8213 seconds.
+Total time: 44.8166 seconds.
+Stream vectice count: 1824701
+Stream edges count: 29487744
+Transforming vectice count: 9980544
+Transforming edges count: 38984457
+Foremost!
+1-pass graph: 0.0641682 seconds.
+Transforming graph: 1.10491 seconds.
+Correct!
+Reverse-Foremost!
+1-pass graph: 0.0531512 seconds.
+Transforming graph: 0.254575 seconds.
+Correct!
+Fastest!
+1-pass graph: 0.82108 seconds.
+Transforming graph: 0.916227 seconds.
+Correct!
+Shortest!
+1-pass graph: 0.757179 seconds.
+Transforming graph: 1.80576 seconds.
+Correct!
+Test Accurate time measured: 5.77887 seconds.
+
+Average time for 100 random inputs:
+Streaming graph:
+Foremost: 0.0424104 seconds.
+Reverse-Foremost: 0.0451227 seconds.
+Fastest: 0.260021 seconds.
+Shortest: 0.292027 seconds.
+Transforming graph:
+Foremost: 0.170682 seconds.
+Reverse-Foremost: 0.189362 seconds.
+Fastest: 0.154497 seconds.
+Shortest: 0.313516 seconds.
+Test Random Nodes time measured: 146.764 seconds.
+
+Current file: "out.elec"
+Generating graph...
+getting graph: 0.0212926 seconds.
+generating streaming graph: 0.00218745 seconds.
+generating transforming graph: 0.159396 seconds.
+Total time: 0.182903 seconds.
+Stream vectice count: 7118
+Stream edges count: 103675
+Transforming vectice count: 201529
+Transforming edges count: 335567
+Foremost!
+1-pass graph: 0.000707223 seconds.
+Transforming graph: 0.00511249 seconds.
+Correct!
+Reverse-Foremost!
+1-pass graph: 0.000153253 seconds.
+Transforming graph: 5.6272e-05 seconds.
+Correct!
+Fastest!
+1-pass graph: 0.000752286 seconds.
+Transforming graph: 0.00285532 seconds.
+Correct!
+Shortest!
+1-pass graph: 0.000832114 seconds.
+Transforming graph: 0.00920133 seconds.
+Correct!
+Test Accurate time measured: 0.0196892 seconds.
+
+Average time for 100 random inputs:
+Streaming graph:
+Foremost: 0.000169795 seconds.
+Reverse-Foremost: 8.47212e-05 seconds.
+Fastest: 0.000314172 seconds.
+Shortest: 0.000321441 seconds.
+Transforming graph:
+Foremost: 0.000692458 seconds.
+Reverse-Foremost: 0.000482506 seconds.
+Fastest: 0.000547592 seconds.
+Shortest: 0.0028018 seconds.
+Test Random Nodes time measured: 0.541482 seconds.
+
+Current file: "out.enron"
+Generating graph...
+getting graph: 0.227935 seconds.
+generating streaming graph: 0.0350218 seconds.
+generating transforming graph: 1.39117 seconds.
+Total time: 1.65419 seconds.
+Stream vectice count: 87273
+Stream edges count: 1148072
+Transforming vectice count: 1378512
+Transforming edges count: 2634687
+Foremost!
+1-pass graph: 0.0021902 seconds.
+Transforming graph: 0.0534891 seconds.
+Correct!
+Reverse-Foremost!
+1-pass graph: 0.00280231 seconds.
+Transforming graph: 0.0455668 seconds.
+Correct!
+Fastest!
+1-pass graph: 0.010793 seconds.
+Transforming graph: 0.0428106 seconds.
+Correct!
+Shortest!
+1-pass graph: 0.00900954 seconds.
+Transforming graph: 0.159289 seconds.
+Correct!
+Test Accurate time measured: 0.326074 seconds.
+
+Average time for 100 random inputs:
+Streaming graph:
+Foremost: 0.00103398 seconds.
+Reverse-Foremost: 0.00145621 seconds.
+Fastest: 0.00159334 seconds.
+Shortest: 0.00148386 seconds.
+Transforming graph:
+Foremost: 0.00219816 seconds.
+Reverse-Foremost: 0.012132 seconds.
+Fastest: 0.00207792 seconds.
+Shortest: 0.00672113 seconds.
+Test Random Nodes time measured: 2.86975 seconds.
+
+Current file: "out.epinions"
+Generating graph...
+getting graph: 0.196647 seconds.
+generating streaming graph: 0.0129935 seconds.
+generating transforming graph: 0.836786 seconds.
+Total time: 1.04646 seconds.
+Stream vectice count: 131828
+Stream edges count: 841372
+Transforming vectice count: 482866
+Transforming edges count: 1259574
+Foremost!
+1-pass graph: 0.001774 seconds.
+Transforming graph: 0.00163199 seconds.
+Correct!
+Reverse-Foremost!
+1-pass graph: 0.00149483 seconds.
+Transforming graph: 0.000810217 seconds.
+Correct!
+Fastest!
+1-pass graph: 0.00323444 seconds.
+Transforming graph: 0.000617004 seconds.
+Correct!
+Shortest!
+1-pass graph: 0.00296369 seconds.
+Transforming graph: 0.00169487 seconds.
+Correct!
+Test Accurate time measured: 0.014355 seconds.
+
+Average time for 100 random inputs:
+Streaming graph:
+Foremost: 0.000794534 seconds.
+Reverse-Foremost: 0.000919944 seconds.
+Fastest: 0.002182 seconds.
+Shortest: 0.00251981 seconds.
+Transforming graph:
+Foremost: 0.00382019 seconds.
+Reverse-Foremost: 0.00161237 seconds.
+Fastest: 0.00306076 seconds.
+Shortest: 0.00892834 seconds.
+Test Random Nodes time measured: 2.38387 seconds.
+
+Current file: "out.facebook-wosn-links"
+Generating graph...
+getting graph: 0.178672 seconds.
+generating streaming graph: 0.0287599 seconds.
+generating transforming graph: 1.13252 seconds.
+Total time: 1.33999 seconds.
+Stream vectice count: 63731
+Stream edges count: 817035
+Transforming vectice count: 756937
+Transforming edges count: 1798062
+Foremost!
+1-pass graph: 0.00212781 seconds.
+Transforming graph: 0.0232914 seconds.
+Correct!
+Reverse-Foremost!
+1-pass graph: 0.000892445 seconds.
+Transforming graph: 1.969e-05 seconds.
+Correct!
+Fastest!
+1-pass graph: 0.00587206 seconds.
+Transforming graph: 0.0184353 seconds.
+Correct!
+Shortest!
+1-pass graph: 0.00828711 seconds.
+Transforming graph: 0.0550997 seconds.
+Correct!
+Test Accurate time measured: 0.114107 seconds.
+
+Average time for 100 random inputs:
+Streaming graph:
+Foremost: 0.000682883 seconds.
+Reverse-Foremost: 0.00076978 seconds.
+Fastest: 0.00137009 seconds.
+Shortest: 0.00131385 seconds.
+Transforming graph:
+Foremost: 0.00119009 seconds.
+Reverse-Foremost: 0.00132862 seconds.
+Fastest: 0.000936703 seconds.
+Shortest: 0.0030667 seconds.
+Test Random Nodes time measured: 1.06593 seconds.
+
+Current file: "out.flickr-growth"
+Generating graph...
+getting graph: 9.27457 seconds.
+generating streaming graph: 1.29407 seconds.
+generating transforming graph: 56.433 seconds.
+Total time: 67.0017 seconds.
+Stream vectice count: 2302925
+Stream edges count: 33140017
+Transforming vectice count: 12600099
+Transforming edges count: 44932105
+Foremost!
+1-pass graph: 0.0507339 seconds.
+Transforming graph: 0.983597 seconds.
+Correct!
+Reverse-Foremost!
+1-pass graph: 0.047995 seconds.
+Transforming graph: 0.000664515 seconds.
+Correct!
+Fastest!
+1-pass graph: 0.396309 seconds.
+Transforming graph: 0.798184 seconds.
+Correct!
+Shortest!
+1-pass graph: 0.474332 seconds.
+Transforming graph: 2.13009 seconds.
+Correct!
+Test Accurate time measured: 4.88412 seconds.
+
+Average time for 100 random inputs:
+Streaming graph:
+Foremost: 0.0419751 seconds.
+Reverse-Foremost: 0.0593198 seconds.
+Fastest: 0.212145 seconds.
+Shortest: 0.238168 seconds.
+Transforming graph:
+Foremost: 0.289259 seconds.
+Reverse-Foremost: 0.1898 seconds.
+Fastest: 0.274658 seconds.
+Shortest: 0.76512 seconds.
+Test Random Nodes time measured: 207.045 seconds.
+
+Current file: "out.trips_summary"
+Generating graph...
+getting graph: 0.00100949 seconds.
+generating streaming graph: 4.3869e-05 seconds.
+generating transforming graph: 0.00537979 seconds.
+Total time: 0.00645164 seconds.
+Stream vectice count: 84
+Stream edges count: 5894
+Transforming vectice count: 7423
+Transforming edges count: 14951
+Foremost!
+1-pass graph: 9.319e-06 seconds.
+Transforming graph: 1.5175e-05 seconds.
+Correct!
+Reverse-Foremost!
+1-pass graph: 4.557e-06 seconds.
+Transforming graph: 1.0173e-05 seconds.
+Correct!
+Fastest!
+1-pass graph: 1.8312e-05 seconds.
+Transforming graph: 1.4668e-05 seconds.
+Correct!
+Shortest!
+1-pass graph: 8.083e-06 seconds.
+Transforming graph: 3.5136e-05 seconds.
+Correct!
+Test Accurate time measured: 0.00012716 seconds.
+
+Average time for 100 random inputs:
+Streaming graph:
+Foremost: 4.28225e-06 seconds.
+Reverse-Foremost: 3.49137e-06 seconds.
+Fastest: 8.02678e-06 seconds.
+Shortest: 6.59787e-06 seconds.
+Transforming graph:
+Foremost: 4.71708e-06 seconds.
+Reverse-Foremost: 3.83526e-06 seconds.
+Fastest: 4.63984e-06 seconds.
+Shortest: 1.521e-05 seconds.
+Test Random Nodes time measured: 0.00509918 seconds.
+
+Current file: "out.trips_summary"
+Generating graph...
+getting graph: 0.00101865 seconds.
+generating streaming graph: 3.707e-05 seconds.
+generating transforming graph: 0.00551056 seconds.
+Total time: 0.00657631 seconds.
+Stream vectice count: 84
+Stream edges count: 5894
+Transforming vectice count: 7423
+Transforming edges count: 14951
+Foremost!
+1-pass graph: 5.083e-06 seconds.
+Transforming graph: 1.4236e-05 seconds.
+Correct!
+Reverse-Foremost!
+1-pass graph: 4.328e-06 seconds.
+Transforming graph: 1.0085e-05 seconds.
+Correct!
+Fastest!
+1-pass graph: 1.3454e-05 seconds.
+Transforming graph: 1.3112e-05 seconds.
+Correct!
+Shortest!
+1-pass graph: 7.631e-06 seconds.
+Transforming graph: 3.2127e-05 seconds.
+Correct!
+Test Accurate time measured: 0.000104154 seconds.
+
+Average time for 100 random inputs:
+Streaming graph:
+Foremost: 4.10415e-06 seconds.
+Reverse-Foremost: 3.44687e-06 seconds.
+Fastest: 7.79036e-06 seconds.
+Shortest: 6.435e-06 seconds.
+Transforming graph:
+Foremost: 4.63382e-06 seconds.
+Reverse-Foremost: 3.76165e-06 seconds.
+Fastest: 4.46423e-06 seconds.
+Shortest: 1.49098e-05 seconds.
+Test Random Nodes time measured: 0.00497086 seconds.
+
+Current file: "out.munmun_digg_reply"
+Generating graph...
+getting graph: 0.0230593 seconds.
+generating streaming graph: 0.00324816 seconds.
+generating transforming graph: 0.158414 seconds.
+Total time: 0.184758 seconds.
+Stream vectice count: 30398
+Stream edges count: 87627
+Transforming vectice count: 169676
+Transforming edges count: 255648
+Foremost!
+1-pass graph: 0.000342569 seconds.
+Transforming graph: 0.000751175 seconds.
+Correct!
+Reverse-Foremost!
+1-pass graph: 8.3564e-05 seconds.
+Transforming graph: 8.855e-06 seconds.
+Correct!
+Fastest!
+1-pass graph: 0.000184425 seconds.
+Transforming graph: 6.9868e-05 seconds.
+Correct!
+Shortest!
+1-pass graph: 0.000144162 seconds.
+Transforming graph: 0.000230038 seconds.
+Correct!
+Test Accurate time measured: 0.00184836 seconds.
+
+Average time for 100 random inputs:
+Streaming graph:
+Foremost: 5.37157e-05 seconds.
+Reverse-Foremost: 4.65747e-05 seconds.
+Fastest: 0.000160796 seconds.
+Shortest: 0.000159035 seconds.
+Transforming graph:
+Foremost: 7.28286e-05 seconds.
+Reverse-Foremost: 5.91692e-05 seconds.
+Fastest: 5.73186e-05 seconds.
+Shortest: 0.00024 seconds.
+Test Random Nodes time measured: 0.0849761 seconds.
+
+Current file: "out.slashdot-threads"
+Generating graph...
+getting graph: 0.0374946 seconds.
+generating streaming graph: 0.00490332 seconds.
+generating transforming graph: 0.256463 seconds.
+Total time: 0.298942 seconds.
+Stream vectice count: 51083
+Stream edges count: 140778
+Transforming vectice count: 270670
+Transforming edges count: 414932
+Foremost!
+1-pass graph: 0.000936601 seconds.
+Transforming graph: 0.00597824 seconds.
+Correct!
+Reverse-Foremost!
+1-pass graph: 0.000214888 seconds.
+Transforming graph: 0.000617476 seconds.
+Correct!
+Fastest!
+1-pass graph: 0.00140361 seconds.
+Transforming graph: 0.00286012 seconds.
+Correct!
+Shortest!
+1-pass graph: 0.00161708 seconds.
+Transforming graph: 0.0071888 seconds.
+Correct!
+Test Accurate time measured: 0.0208767 seconds.
+
+Average time for 100 random inputs:
+Streaming graph:
+Foremost: 0.000229193 seconds.
+Reverse-Foremost: 0.000158803 seconds.
+Fastest: 0.000805745 seconds.
+Shortest: 0.000856094 seconds.
+Transforming graph:
+Foremost: 0.00137451 seconds.
+Reverse-Foremost: 0.000932767 seconds.
+Fastest: 0.00105948 seconds.
+Shortest: 0.00326 seconds.
+Test Random Nodes time measured: 0.867714 seconds.
+
+Current file: "out.wikiconflict"
+Generating graph...
+getting graph: 0.613814 seconds.
+generating streaming graph: 0.123268 seconds.
+generating transforming graph: 4.06103 seconds.
+Total time: 4.79817 seconds.
+Stream vectice count: 116836
+Stream edges count: 2985759
+Transforming vectice count: 2902436
+Transforming edges count: 7509230
+Foremost!
+1-pass graph: 0.00485278 seconds.
+Transforming graph: 0.198961 seconds.
+Correct!
+Reverse-Foremost!
+1-pass graph: 0.00350795 seconds.
+Transforming graph: 4.5309e-05 seconds.
+Correct!
+Fastest!
+1-pass graph: 0.0482121 seconds.
+Transforming graph: 0.137948 seconds.
+Correct!
+Shortest!
+1-pass graph: 0.0321255 seconds.
+Transforming graph: 0.53133 seconds.
+Correct!
+Test Accurate time measured: 0.957105 seconds.
+
+Average time for 100 random inputs:
+Streaming graph:
+Foremost: 0.00310003 seconds.
+Reverse-Foremost: 0.00345733 seconds.
+Fastest: 0.00605783 seconds.
+Shortest: 0.0056134 seconds.
+Transforming graph:
+Foremost: 0.00975698 seconds.
+Reverse-Foremost: 0.0291278 seconds.
+Fastest: 0.0082765 seconds.
+Shortest: 0.0231199 seconds.
+Test Random Nodes time measured: 8.85109 seconds.
+
+Current file: "out.wikipedia-growth"
+Generating graph...
+getting graph: 12.9405 seconds.
+generating streaming graph: 1.56381 seconds.
+generating transforming graph: 170.427 seconds.
+Total time: 184.932 seconds.
+Stream vectice count: 1870709
+Stream edges count: 39953145
+Transforming vectice count: 34814941
+Transforming edges count: 80189113
+Foremost!
+1-pass graph: 0.101056 seconds.
+Transforming graph: 3.61857 seconds.
+Correct!
+Reverse-Foremost!
+1-pass graph: 0.101638 seconds.
+Transforming graph: 2.82778 seconds.
+Correct!
+Fastest!
+1-pass graph: 1.62791 seconds.
+Transforming graph: 3.24245 seconds.
+Correct!
+Shortest!
+1-pass graph: 1.4963 seconds.
+Transforming graph: 8.8948 seconds.
+Correct!
+Test Accurate time measured: 21.9124 seconds.
+
+Average time for 100 random inputs:
+Streaming graph:
+Foremost: 0.0783182 seconds.
+Reverse-Foremost: 0.0817958 seconds.
+Fastest: 0.746698 seconds.
+Shortest: 0.806878 seconds.
+Transforming graph:
+Foremost: 1.31311 seconds.
+Reverse-Foremost: 1.76763 seconds.
+Fastest: 1.27541 seconds.
+Shortest: 3.40136 seconds.
+Test Random Nodes time measured: 947.119 seconds.
+
+Current file: "out.youtube-u-growth"
+Generating graph...
+getting graph: 3.20522 seconds.
+generating streaming graph: 0.428529 seconds.
+generating transforming graph: 16.3509 seconds.
+Total time: 19.9847 seconds.
+Stream vectice count: 3223585
+Stream edges count: 9375374
+Transforming vectice count: 8901388
+Transforming edges count: 16834179
+Foremost!
+1-pass graph: 0.0289041 seconds.
+Transforming graph: 0.608677 seconds.
+Correct!
+Reverse-Foremost!
+1-pass graph: 0.0189558 seconds.
+Transforming graph: 0.000866571 seconds.
+Correct!
+Fastest!
+1-pass graph: 0.365334 seconds.
+Transforming graph: 0.446862 seconds.
+Correct!
+Shortest!
+1-pass graph: 0.400919 seconds.
+Transforming graph: 1.00977 seconds.
+Correct!
+Test Accurate time measured: 2.88341 seconds.
+
+Average time for 100 random inputs:
+Streaming graph:
+Foremost: 0.0141605 seconds.
+Reverse-Foremost: 0.0170169 seconds.
+Fastest: 0.0616057 seconds.
+Shortest: 0.0644041 seconds.
+Transforming graph:
+Foremost: 0.0118648 seconds.
+Reverse-Foremost: 0.0366104 seconds.
+Fastest: 0.00952494 seconds.
+Shortest: 0.0269186 seconds.
+Test Random Nodes time measured: 24.2107 seconds.
+

@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#include "testlib.h"
+#include "../header/testlib.h"
 
 const int MAX_N = 1000000;
 const int MAX_M = 2000000;
