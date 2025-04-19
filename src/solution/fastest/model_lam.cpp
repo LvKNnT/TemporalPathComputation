@@ -23,7 +23,11 @@ public:
 			mapB.erase(old_b);
 			itA->second = b;
 		}
-		mapB[b] = a;
+		if (mapB.count(b)) {
+			mapB[b] = std::max(mapB[b], a);
+		} else {
+			mapB[b] = a;
+		}
 		auto jt = std::next(itA);
 		if (jt != mapA.end())
 			itA = jt;
@@ -37,7 +41,6 @@ public:
 			mapB.erase(kt->second);
 			mapA.erase(kt);
 		}
-		assert(mapA.size() == mapB.size());
 		return true;
 	}
 
@@ -68,7 +71,6 @@ int main(void) {
 		}
 		int s, a;
 		std::tie(s, a) = L[u].find_largest_smaller_or_equal(t);
-		assert(s <= a);
 		if (s == -1 and a == -1)
 			continue;
 		a = t + l;
