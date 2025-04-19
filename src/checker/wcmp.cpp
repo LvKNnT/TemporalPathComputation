@@ -3,7 +3,7 @@
 using namespace std;
 
 int main(int argc, char * argv[]) {
-  setName("compare sequences of tokens");
+  	setName("compare sequences of tokens");
 	registerTestlibCmd(argc, argv);
 
 	int n = 0;

@@ -10,7 +10,7 @@ private:
     unordered_map<string, int> string_to_id;
     unordered_map<int, string> id_to_string;
     queue<int> free_ids;
-    int current_id = 0;
+    int current_id = 1;
     int current_size = 0;
 
 public:

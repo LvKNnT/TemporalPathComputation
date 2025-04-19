@@ -25,14 +25,22 @@ void getGraph(fstream& fin, fstream& fout) {
     vector<tuple<int, int, int, int> > g;
     
     string line;
-    getline(fin, line); // skip first line
-    while(getline(fin, line)) {
+    int n, m;
+    {
+        // Process the first line
+        getline(fin, line);
+        stringstream ss(line);
+        ss >> n >> m;
+        hasher.AddFixedId(n);
+    }
+    for(int i=0;i<m;++i) {
+        getline(fin, line);
         if(!line.empty() && line[0] == '%') continue; // skipping comment line
         
         stringstream ss(line);
         string u, v;
         int ta, tw;
-        if((ss >> u >> v >> tw >> ta) && tw >= 0) {
+        if((ss >> u >> v >> ta >> tw) && tw >= 0) {
             g.push_back({hasher.AddString(u), hasher.AddString(v), ta, tw});
         }
         else {
@@ -523,6 +531,29 @@ bool checkAccurate(const string& target, const int& ta, const int& tw, fstream& 
     return yes;
 }
 
+// Test generator for themis
+void testGenerator(fstream& ftest, fstream& fsolution, const int k) {
+    // get node k of the graph
+    const int node = (hasher.GetSize() - 1) * k;
+    const int ta = 0, tw = INT_MAX;
+
+    ftest << hasher.GetFixedId() << " " << StreamPresentation::g.size() << "\n";
+    ftest << hasher.GetString(node) << " " << ta << " " << tw << "\n";
+
+    for(const auto& [u, v, ta, tw] : StreamPresentation::g) {
+        ftest << hasher.GetString(u) << " " << hasher.GetString(v) << " " << ta << " " << tw << "\n";
+    }
+
+    vector<int> f = StreamPresentation::ComputingReverseForemostTime(node, ta, tw);
+    vector<int> ans(hasher.GetFixedId(), INT_MIN);
+    for(int i = 0; i < hasher.GetSize(); ++i) {
+        ans[stoi(hasher.GetString(i)) - 1] = f[i];
+    }
+    for(const int& v : ans) {
+        fsolution  << (v != INT_MIN ? v : -1) << " ";
+    }
+}
+
 signed main() {
     const std::string DISTANCE_PATH = "../solution/distance/";
     const std::string PATH_PATH = "../solution/path/";
@@ -531,7 +562,10 @@ signed main() {
     // const std::string DATA_PATH = "../raw/youtube-u-growth/";
     // const std::string DATA_PATH = "../raw/dblp_coauthor/";
     const std::string DATA_PATH = "../Data/";
+    const std::string TEST_PATH = "../Themis/Tasks/reverseforemost/";
     const std::string OUT_PATH = "../res/res.out";
+
+    for(int i=0;i<10;++i) {
 
     // Access to output
     fstream fout(OUT_PATH, ios::out);
@@ -539,6 +573,19 @@ signed main() {
         cerr << "Failed to open output file!\n";
         return 1;
     }
+
+    const int randomNode = 100;
+    char16_t* randomNodePtr = new char16_t;
+    const int64_t RNGcode = (int64_t) randomNodePtr;
+    delete randomNodePtr;
+    
+    /*
+    const int RNGcode = 2703;
+    */
+    fout << "Random nodes: " << randomNode << "\n";
+    cerr << "Random nodes: " << randomNode << "\n";
+    fout << "RNG code: " << RNGcode << "\n";
+    cerr << "RNG code: " << RNGcode << "\n";
 
     try {
         for (const auto& entry : fs::recursive_directory_iterator(DATA_PATH)) {
@@ -549,33 +596,23 @@ signed main() {
                 fstream fin(entry.path(), ios::in);
                 if(!fin.is_open()) {
                     cerr << "Failed to open file!\n";
-                    return 1;
+                    continue;
                 }  
                 
                 getGraph(fin, fout);
                 if(StreamPresentation::g.size() == 0) {
                     cerr << "Input error!\n";
-                    fout << "Input error!\n";
-
+                    // fout << "Input error!\n";
+                    
                     ClearGraph();
                     fin.close();
                     continue;
-                }
-                const int randomNode = 100;
-                /*
-                char16_t* randomNodePtr = new char16_t;
-                const int64_t RNGcode = (int64_t) randomNodePtr;
-                delete randomNodePtr;
-                
-                const int RNGcode = 2703;
-                fout << "Random nodes: " << randomNode << "\n";
-                fout << "RNG code: " << RNGcode << "\n";
-                
+                    }
+                    
                 if(checkAccurate("1", 0, INT_MAX, fin, fout)) {
                     testRandomNodes(randomNode, RNGcode, fin, fout);
-                }
-                */
-                
+                }   
+                        
                 /*
                 // Test for random nodes
                 testRandomNodes(randomNode, RNGcode, fin, fout);
@@ -587,12 +624,43 @@ signed main() {
                 */
                 
                 /*
-                */
                 // Output distance
                 output_distance(DISTANCE_PATH + entry.path().parent_path().filename().string(), "1", 0, INT_MAX);
                 // Output path 
                 output_path(PATH_PATH + entry.path().parent_path().filename().string(), "1", 0, INT_MAX);
-
+                
+                // Test generator for themis
+                
+                const string testName = entry.path().parent_path().filename().string();
+                
+                // Makeing test in subfolder like themis format
+                for(int i=0;i<2;++i) {
+                    // Create subfolder
+                    fs::path subfolder = fs::path(TEST_PATH) / (testName + "_" + to_string(i+1));
+                    fs::create_directories(subfolder);
+                    
+                    // Create test file
+                    fs::path testFile = subfolder / ("reverseforemost.INP");
+                    fs::path solutionFile = subfolder / ("reverseforemost.OUT");
+                    
+                    fstream testFileStream(testFile, ios::out);
+                    if(!testFileStream.is_open()) {
+                        cerr << "Failed to open test file!\n";
+                        continue;
+                    }
+                    fstream solutionFileStream(solutionFile, ios::out);
+                    if(!solutionFileStream.is_open()) {
+                        cerr << "Failed to open solution file!\n";
+                        continue;
+                    }
+                    
+                    testGenerator(testFileStream, solutionFileStream, i);
+                    
+                    testFileStream.close();
+                    solutionFileStream.close();
+                }
+                */
+                
                 ClearGraph();
                 
                 fin.close();
@@ -606,6 +674,8 @@ signed main() {
     fout.close();
 
     createLog(OUT_PATH);
+
+    }
 
     return 0;
 }

@@ -16,7 +16,18 @@ private:
     int current_id = 0;
     int current_size = 0;
 
+    // for allocating ids
+    int fixed_ids = 0;
+
 public:
+    void AddFixedId(const int& n) {
+        fixed_ids = n;
+    }
+
+    int GetFixedId() {
+        return fixed_ids;
+    }
+
     int AddString(const string& s) {
         if(string_to_id.find(s) != string_to_id.end()) {
             return string_to_id[s];

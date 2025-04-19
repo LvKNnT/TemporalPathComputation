@@ -1,31 +1,50 @@
-#include <bits/stdc++.h>
+#include "Hasher.h"
 
-using namespace std;
-namespace fs = filesystem;
+namespace fs = std::filesystem;
 
 /*
-Modified disqualified graph to qualified graph.
-Mostly change all the negative weight to positive weight.
-Change float weight to int weight.
+Clarification:
+input file .csv should in separated folder.
 */
 
-const string input_path = "../../old_data";
-const string output_path = "../../Data";
+const string raw_path = "../raw_real_data/";
+const string out_path = "../../old_data/";
 
-void ModGraph(fstream& fin, fstream& fout) {
-    int n, m;
-    fin >> n >> m;
-    fout << n << " " << m << "\n";
+// input from .csv file
+void GenGraph(fstream& fin, fstream& fout) {
+    vector<vector<string> > g;
 
-    for(int i=0;i<m;++i) {
-        int u, v;
-        float ta, tw;
-        fin >> u >> v >> ta >> tw;
-        if(tw < 0) {
-            tw = -tw;
+    string line;
+    getline(fin, line); // skip first line
+    while(getline(fin, line)) {
+        stringstream ss(line);
+        vector<string> tokens;
+        string token;
+
+        while (getline(ss, token, ',')) {
+            tokens.push_back(token);
         }
+        if (tokens.size() != 4) {
+            cerr << "Invalid line: " << line << "\n"; // should not come here
+            continue;
+        }
+        hasher.AddString(tokens[0]);
+        timer.AddTime(tokens[1]);
+        hasher.AddString(tokens[2]);
+        timer.AddTime(tokens[3]);
 
-        fout << u << " " << v << " " << int(ta) << " " << int(tw) << "\n";
+        g.emplace_back(tokens);
+    }
+
+    // Preprocess the graph
+    timer.Process();
+    stable_sort(g.begin(), g.end(), [](const vector<string>& a, const vector<string>& b) {
+        return timer.GetId(a[1]) < timer.GetId(b[1]);
+    });
+
+    fout << hasher.GetSize() << " " << g.size() << "\n";
+    for(const vector<string>& e : g) {
+        fout << hasher.GetId(e[0]) << " " << hasher.GetId(e[2]) << " " << timer.GetId(e[1])  << " " << timer.GetId(e[3]) - timer.GetId(e[1]) << "\n";
     }
 }
 
@@ -35,12 +54,12 @@ signed main() {
     cout.tie(nullptr);
 
     try {
-        for (const auto& entry : fs::recursive_directory_iterator(input_path)) {
-            if (entry.is_regular_file() && entry.path().filename().string().rfind("out", 0) == 0) {
-                fs::path relative = fs::relative(entry.path(), input_path);
-                fs::path out_subdir = fs::path(output_path) / relative.parent_path();
+        for (const auto& entry : fs::recursive_directory_iterator(raw_path)) {
+            if (entry.is_regular_file() && entry.path().extension() == ".csv") {
+                fs::path relative = fs::relative(entry.path(), raw_path);
+                fs::path out_subdir = fs::path(out_path) / relative.parent_path();
 
-                std::string out_filename = entry.path().filename().string();
+                std::string out_filename = "out." + entry.path().stem().string();
                 fs::path out_file_path = out_subdir / out_filename;
 
                 fs::create_directories(out_subdir);
@@ -52,7 +71,7 @@ signed main() {
                 }
                 fstream fout(out_file_path, ios::out);
 
-                ModGraph(fin, fout);
+                GenGraph(fin, fout);
 
                 fin.close();
                 fout.close();

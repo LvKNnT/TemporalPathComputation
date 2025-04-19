@@ -157,6 +157,6 @@ signed main() {
 
     // Output the results
     for(int i=0; i<n; ++i) {
-        cout << (f[i] == INT_MAX ? -1 : f[i]) << " \n"[i+1 == n];
+        cout << (f[i] == INT_MIN ? -1 : f[i]) << " \n"[i+1 == n];
     }
 }
