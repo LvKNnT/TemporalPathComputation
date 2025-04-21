@@ -561,13 +561,14 @@ void testGenerator(fstream& ftest, fstream& fsolution, const int k) {
 }
 
 signed main() {
-    const std::string DISTANCE_PATH = "../solution/distance/";
-    const std::string PATH_PATH = "../solution/path/";
+    const std::string DISTANCE_PATH = "../lvk_solution/distance/";
+    const std::string PATH_PATH = "../lvk_solution/path/";
     // const std::string DATA_PATH = "../raw/";
     // const std::string DATA_PATH = "../raw/ca-cit-HepPh/";
     // const std::string DATA_PATH = "../raw/youtube-u-growth/";
     // const std::string DATA_PATH = "../raw/dblp_coauthor/";
-    const std::string DATA_PATH = "../Themis/Data/";
+    // const std::string DATA_PATH = "../Themis/Data/";
+    const std::string DATA_PATH = "../Data/";
     const std::string TEST_PATH = "../Themis/Tasks/reverseforemost/";
     const std::string OUT_PATH = "../res/res.out";
 
@@ -627,13 +628,12 @@ signed main() {
                 checkAccurate("1", 0, INT_MAX, fin, fout);
                 */
                
-                /*
                 // Output distance
                 output_distance(DISTANCE_PATH + entry.path().parent_path().filename().string(), "1", 0, INT_MAX);
                 // Output path 
                 output_path(PATH_PATH + entry.path().parent_path().filename().string(), "1", 0, INT_MAX);
-                */
-                
+               
+                /*
                 // Test generator for themis
                 
                 const string testName = entry.path().parent_path().filename().string();
@@ -664,6 +664,7 @@ signed main() {
                     testFileStream.close();
                     solutionFileStream.close();
                 }
+                */
                 
                 ClearGraph();
                 
