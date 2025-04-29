@@ -112,6 +112,8 @@ void getGraph(fstream& fin, fstream& fout) {
     cerr << "AnnChann vertice count: " << hasher.GetSize() << "\n";
     fout << "AnnChann edges count: " << edges.size() << "\n";
     cerr << "AnnChann edges count: " << edges.size() << "\n";
+
+    fout << "\n";
 }
 
 void ClearGraph() {
@@ -231,8 +233,8 @@ void showDifference(fstream& fout, const vector<int>& f, const vector<int>& ff) 
     }
 }
 
-bool checkForemost(const string& target, const int ta, const int tw, fstream& fin, fstream& fout) {
-    fout << "Foremost!\n";
+bool checkForemost(const string& target, const int ta, const int tw, fstream& fin, fstream& fout, const bool& isDebug) {
+    if(isDebug) fout << "Foremost!\n";
 
     // Setting input for both solutions
     const int des = hasher.GetId(target);
@@ -248,7 +250,7 @@ bool checkForemost(const string& target, const int ta, const int tw, fstream& fi
     
     auto end = std::chrono::high_resolution_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-    fout << "1-pass graph: " << elapsed.count() * 1e-9 << " seconds.\n";
+    if(isDebug) fout << "1-pass graph: " << elapsed.count() * 1e-9 << " seconds.\n";
     
     // Solution provided by transforming graph
     begin = std::chrono::high_resolution_clock::now();
@@ -257,7 +259,7 @@ bool checkForemost(const string& target, const int ta, const int tw, fstream& fi
     
     end = std::chrono::high_resolution_clock::now();
     elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-    fout << "Transforming graph: " << elapsed.count() * 1e-9 << " seconds.\n";
+    if(isDebug) fout << "Transforming graph: " << elapsed.count() * 1e-9 << " seconds.\n";
 
     // Solution provided by AnnChann's code
     begin = std::chrono::high_resolution_clock::now();
@@ -267,27 +269,27 @@ bool checkForemost(const string& target, const int ta, const int tw, fstream& fi
     
     end = std::chrono::high_resolution_clock::now();
     elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-    fout << "AnnChann's code: " << elapsed.count() * 1e-9 << " seconds.\n";
+    if(isDebug) fout << "AnnChann's code: " << elapsed.count() * 1e-9 << " seconds.\n";
 
     if(f == ff && f == fff) {
-        fout << "Correct!\n";
+        if(isDebug) fout << "Correct!\n";
         return true;
     }
 
     fout << "False!\n";
     if(f != ff) {
         fout << "f != ff\n";
-        showDifference(fout, f, ff);
+        if(isDebug) showDifference(fout, f, ff);
     }
     if(f != fff) {
         fout << "f != fff\n";
-        showDifference(fout, f, fff);
+        if(isDebug) showDifference(fout, f, fff);
     }
     return false;
 }
 
-bool checkReverseForemost(const string& target, const int ta, const int tw, fstream& fin, fstream& fout) {
-    fout << "Reverse-Foremost!\n";
+bool checkReverseForemost(const string& target, const int ta, const int tw, fstream& fin, fstream& fout, const bool& isDebug) {
+    if(isDebug) fout << "Reverse-Foremost!\n";
 
     // Setting input for both solutions
     const int des = hasher.GetId(target);
@@ -303,7 +305,7 @@ bool checkReverseForemost(const string& target, const int ta, const int tw, fstr
     
     auto end = std::chrono::high_resolution_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-    fout << "1-pass graph: " << elapsed.count() * 1e-9 << " seconds.\n";
+    if(isDebug) fout << "1-pass graph: " << elapsed.count() * 1e-9 << " seconds.\n";
     
     // Solution provided by transforming graph
     begin = std::chrono::high_resolution_clock::now();
@@ -312,7 +314,7 @@ bool checkReverseForemost(const string& target, const int ta, const int tw, fstr
     
     end = std::chrono::high_resolution_clock::now();
     elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-    fout << "Transforming graph: " << elapsed.count() * 1e-9 << " seconds.\n";
+    if(isDebug) fout << "Transforming graph: " << elapsed.count() * 1e-9 << " seconds.\n";
 
     // Solution provided by AnnChann's code
     begin = std::chrono::high_resolution_clock::now();
@@ -322,27 +324,27 @@ bool checkReverseForemost(const string& target, const int ta, const int tw, fstr
     
     end = std::chrono::high_resolution_clock::now();
     elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-    fout << "AnnChann's code: " << elapsed.count() * 1e-9 << " seconds.\n";
+    if(isDebug) fout << "AnnChann's code: " << elapsed.count() * 1e-9 << " seconds.\n";
 
     if(f == ff && f == fff) {
-        fout << "Correct!\n";
+        if(isDebug) fout << "Correct!\n";
         return true;
     }
     
     fout << "False!\n";
     if(f != ff) {
         fout << "f != ff\n";
-        showDifference(fout, f, ff);
+        if(isDebug) showDifference(fout, f, ff);
     }
     if(f != fff) {
         fout << "f != fff\n";
-        showDifference(fout, f, fff);
+        if(isDebug) showDifference(fout, f, fff);
     }
     return false;
 }
 
-bool checkFastest(const string& target, const int ta, const int tw, fstream& fin, fstream& fout) {
-    fout << "Fastest!\n";
+bool checkFastest(const string& target, const int ta, const int tw, fstream& fin, fstream& fout, const bool& isDebug) {
+    if(isDebug) fout << "Fastest!\n";
 
     // Setting input for both solutions
     const int des = hasher.GetId(target);
@@ -358,7 +360,7 @@ bool checkFastest(const string& target, const int ta, const int tw, fstream& fin
     
     auto end = std::chrono::high_resolution_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-    fout << "1-pass graph: " << elapsed.count() * 1e-9 << " seconds.\n";
+    if(isDebug) fout << "1-pass graph: " << elapsed.count() * 1e-9 << " seconds.\n";
     
     // Solution provided by transforming graph
     begin = std::chrono::high_resolution_clock::now();
@@ -367,7 +369,7 @@ bool checkFastest(const string& target, const int ta, const int tw, fstream& fin
     
     end = std::chrono::high_resolution_clock::now();
     elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-    fout << "Transforming graph: " << elapsed.count() * 1e-9 << " seconds.\n";
+    if(isDebug) fout << "Transforming graph: " << elapsed.count() * 1e-9 << " seconds.\n";
 
     // Solution provided by AnnChann's code
     begin = std::chrono::high_resolution_clock::now();
@@ -377,27 +379,27 @@ bool checkFastest(const string& target, const int ta, const int tw, fstream& fin
     
     end = std::chrono::high_resolution_clock::now();
     elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-    fout << "AnnChann's code: " << elapsed.count() * 1e-9 << " seconds.\n";
+    if(isDebug) fout << "AnnChann's code: " << elapsed.count() * 1e-9 << " seconds.\n";
 
     if(f == ff && f == fff) {
-        fout << "Correct!\n";
+        if(isDebug) fout << "Correct!\n";
         return true;
     }
     
     fout << "False!\n";
     if(f != ff) {
         fout << "f != ff\n";
-        showDifference(fout, f, ff);
+        if(isDebug) showDifference(fout, f, ff);
     }
     if(f != fff) {
         fout << "f != fff\n";
-        showDifference(fout, f, fff);
+        if(isDebug) showDifference(fout, f, fff);
     }
     return false;
 }
 
-bool checkShortest(const string& target, const int ta, const int tw, fstream& fin, fstream& fout) {
-    fout << "Shortest!\n";
+bool checkShortest(const string& target, const int ta, const int tw, fstream& fin, fstream& fout, const bool& isDebug) {
+    if(isDebug) fout << "Shortest!\n";
 
     // Setting input for both solutions
     const int des = hasher.GetId(target);
@@ -413,7 +415,7 @@ bool checkShortest(const string& target, const int ta, const int tw, fstream& fi
     
     auto end = std::chrono::high_resolution_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-    fout << "1-pass graph: " << elapsed.count() * 1e-9 << " seconds.\n";
+    if(isDebug) fout << "1-pass graph: " << elapsed.count() * 1e-9 << " seconds.\n";
     
     // Solution provided by transforming graph
     begin = std::chrono::high_resolution_clock::now();
@@ -422,7 +424,7 @@ bool checkShortest(const string& target, const int ta, const int tw, fstream& fi
     
     end = std::chrono::high_resolution_clock::now();
     elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-    fout << "Transforming graph: " << elapsed.count() * 1e-9 << " seconds.\n";
+    if(isDebug) fout << "Transforming graph: " << elapsed.count() * 1e-9 << " seconds.\n";
 
     // Solution provided by AnnChann's code
     begin = std::chrono::high_resolution_clock::now();
@@ -432,21 +434,21 @@ bool checkShortest(const string& target, const int ta, const int tw, fstream& fi
     
     end = std::chrono::high_resolution_clock::now();
     elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-    fout << "AnnChann's code: " << elapsed.count() * 1e-9 << " seconds.\n";
+    if(isDebug) fout << "AnnChann's code: " << elapsed.count() * 1e-9 << " seconds.\n";
 
     if(f == ff && f == fff) {
-        fout << "Correct!\n";
+        if(isDebug) fout << "Correct!\n";
         return true;
     }
     
     fout << "False!\n";
     if(f != ff) {
         fout << "f != ff\n";
-        showDifference(fout, f, ff);
+        if(isDebug) showDifference(fout, f, ff);
     }
     if(f != fff) {
         fout << "f != fff\n";
-        showDifference(fout, f, fff);
+        if(isDebug) showDifference(fout, f, fff);
     }
     return false;
 }
@@ -613,6 +615,61 @@ void testRandomNodes(int n, int RNGcode, fstream& fin, fstream& fout) {
     fout << "Test Random Nodes time measured: " << elapsed.count() * 1e-9 << " seconds.\n\n";                
 }
 
+bool checkRandomNodes(int n, int RNGcode, fstream& fin, fstream& fout) {
+    // Counting time testing for each input
+    auto begin = std::chrono::high_resolution_clock::now();
+
+    // RNG
+    mt19937_64 RNG(RNGcode);
+    auto rand = [&](const int& l, const int& r) -> int {
+        return uniform_int_distribution<int>(l, r)(RNG);
+    };
+    
+    // Check for random 100 inputs
+    fout << "Check for " << n << " random inputs:\n";
+
+    bool yes = true;
+    
+    for(int i=0;i<n;++i) {
+        const int idTarget = rand(0, hasher.GetSize() - 1);
+        const string target = hasher.GetString(idTarget); // over-complex
+        const int ta = 0, tw = INT_MAX;
+        
+        if(!checkForemost(target, ta, tw, fin, fout, false)) {
+            yes = false;
+            fout << target << " " << ta << " " << tw << "\n";
+        }
+        if(!checkReverseForemost(target, ta, tw, fin, fout, false)) {
+            yes = false;
+            fout << target << " " << ta << " " << tw << "\n";
+        }
+        if(!checkFastest(target, ta, tw, fin, fout, false)) {
+            yes = false;
+            fout << target << " " << ta << " " << tw << "\n";
+        }
+        if(!checkShortest(target, ta, tw, fin, fout, false)) {
+            yes = false;
+            fout << target << " " << ta << " " << tw << "\n";
+        }
+    }
+
+    if(yes) {
+        fout << "System succeed!\n";
+        cerr << "System succeed!\n";
+    }
+    else {
+        fout << "System fails!\n";
+        cerr << "System fails!\n";
+    }
+
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+    cerr << "Check Random Nodes time measured: " << elapsed.count() * 1e-9 << " seconds.\n";            
+    fout << "Check Random Nodes time measured: " << elapsed.count() * 1e-9 << " seconds.\n\n"; 
+    
+    return yes;
+}
+
 void createLog(const string& OUT_PATH) {
     if(fs::file_size(OUT_PATH) == 0) {
         cerr << "The res.out file is empty!\n";
@@ -644,21 +701,22 @@ void createLog(const string& OUT_PATH) {
     }
 }
 
-bool checkAccurate(const string& target, const int& ta, const int& tw, fstream& fin, fstream& fout) {
+bool checkAccurate(const string& target, const int& ta, const int& tw, fstream& fin, fstream& fout, const bool& isDebug) {
     // Counting time testing for each input
     auto begin = std::chrono::high_resolution_clock::now();
 
     bool yes = true;
     
-    yes = yes && checkForemost(target, ta, tw, fin, fout);
-    yes = yes && checkReverseForemost(target, ta, tw, fin, fout);
-    yes = yes && checkFastest(target, ta, tw, fin, fout);
-    yes = yes && checkShortest(target, ta, tw, fin, fout);
+    yes = yes && checkForemost(target, ta, tw, fin, fout, isDebug);
+    yes = yes && checkReverseForemost(target, ta, tw, fin, fout, isDebug);
+    yes = yes && checkFastest(target, ta, tw, fin, fout, isDebug);
+    yes = yes && checkShortest(target, ta, tw, fin, fout, isDebug);
 
     auto end = std::chrono::high_resolution_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
     cerr << "Test Accurate time measured: " << elapsed.count() * 1e-9 << " seconds.\n";            
-    fout << "Test Accurate time measured: " << elapsed.count() * 1e-9 << " seconds.\n\n";  
+    fout << "Test Accurate time measured: " << elapsed.count() * 1e-9 << " seconds.\n";  
+    fout << "\n";
 
     return yes;
 }
@@ -739,8 +797,8 @@ signed main() {
                     continue;
                 }
                     
-                if(checkAccurate("1", 0, INT_MAX, fin, fout)) {
-                    testRandomNodes(randomNode, RNGcode, fin, fout);
+                if(checkAccurate("1", 0, INT_MAX, fin, fout, true)) {
+                    checkRandomNodes(randomNode, RNGcode, fin, fout);
                 }   
                     
                 /*
