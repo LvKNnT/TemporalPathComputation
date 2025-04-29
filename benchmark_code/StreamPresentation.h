@@ -37,7 +37,7 @@ namespace StreamPresentation {
                     t[v] = t_edge + w_edge;
                 }
             }
-            else if(t_edge >= tw) {
+            else if(t_edge > tw) {
                 break;
             }
         }
@@ -59,7 +59,7 @@ namespace StreamPresentation {
                     t[v] = t_edge + w_edge;
                 }
             }
-            else if(t_edge >= tw) {
+            else if(t_edge > tw) {
                 break;
             }
         }

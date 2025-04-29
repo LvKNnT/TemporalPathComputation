@@ -13,6 +13,17 @@
 #include "StreamPresentation.h"
 #include "TransformingGraph.h"
 
+// for AnnChann's Code
+#include "AnnChann/graphUtil.h"
+#include "AnnChann/foremost.h"
+#include "AnnChann/revforemost.h"
+#include "AnnChann/fastest.h"
+#include "AnnChann/shortest.h"
+
+vector<Edge> edges;
+
+// end of AnnChann's Code
+
 using namespace std;
 namespace fs = std::filesystem;
 
@@ -42,6 +53,8 @@ void getGraph(fstream& fin, fstream& fout) {
         int ta, tw;
         if((ss >> u >> v >> ta >> tw) && tw >= 0) {
             g.push_back({hasher.AddString(u), hasher.AddString(v), ta, tw});
+
+            edges.push_back({hasher.AddString(u), hasher.AddString(v), ta, tw});
         }
         else {
             fout << "Invalid line!\n"; // should not come here
@@ -66,27 +79,45 @@ void getGraph(fstream& fin, fstream& fout) {
     end = std::chrono::high_resolution_clock::now();
     elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - sbegin);
     fout << "generating transforming graph: " << elapsed.count() * 1e-9 << " seconds.\n";            
-    cerr << "generating transforming graph: " << elapsed.count() * 1e-9 << " seconds.\n";     
+    cerr << "generating transforming graph: " << elapsed.count() * 1e-9 << " seconds.\n";   
+    
+    sbegin = std::chrono::high_resolution_clock::now();
+    streamPresentation_ize(edges);
+    end = std::chrono::high_resolution_clock::now();
+    elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - sbegin);
+    fout << "sorting graph: " << elapsed.count() * 1e-9 << " seconds.\n";
+    cerr << "sorting graph: " << elapsed.count() * 1e-9 << " seconds.\n";
     
     end = std::chrono::high_resolution_clock::now();
     elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
     fout << "Total time: " << elapsed.count() * 1e-9 << " seconds.\n";            
     cerr << "Total time: " << elapsed.count() * 1e-9 << " seconds.\n";     
 
-    fout << "Stream vectice count: " << hasher.GetSize() << "\n";
-    cerr << "Stream vectice count: " << hasher.GetSize() << "\n";
+    fout << "Vertice count: " << n << "\n";
+    cerr << "Vertice count: " << n << "\n";
+    fout << "Edge count: " << m << "\n";
+    cerr << "Edge count: " << m << "\n";
+
+    fout << "Stream vertice count: " << hasher.GetSize() << "\n";
+    cerr << "Stream vertice count: " << hasher.GetSize() << "\n";
     fout << "Stream edges count: " << g.size() << "\n";
     cerr << "Stream edges count: " << g.size() << "\n";
 
-    fout << "Transforming vectice count: " << TransformingGraph::vertices_count << "\n";
-    cerr << "Transforming vectice count: " << TransformingGraph::vertices_count << "\n";
+    fout << "Transforming vertice count: " << TransformingGraph::vertices_count << "\n";
+    cerr << "Transforming vertice count: " << TransformingGraph::vertices_count << "\n";
     fout << "Transforming edges count: " << TransformingGraph::edges_count << "\n";
     cerr << "Transforming edges count: " << TransformingGraph::edges_count << "\n";
+
+    fout << "AnnChann vertice count: " << hasher.GetSize() << "\n";
+    cerr << "AnnChann vertice count: " << hasher.GetSize() << "\n";
+    fout << "AnnChann edges count: " << edges.size() << "\n";
+    cerr << "AnnChann edges count: " << edges.size() << "\n";
 }
 
 void ClearGraph() {
     StreamPresentation::ClearGraph();
     TransformingGraph::ClearGraph();
+    edges.clear();
     hasher.Clear();
 }
 
@@ -185,7 +216,7 @@ void output_path(const string& path, const string& target, const int& ta, const 
 }
 
 // Show the difference between f and ff
-void showDifference(fstream& fout, const vector<int>& f, const vector<int>& ff) {
+void showDifference(fstream& fout, const vector<int>& f, const vector<int>& ff) {    
     map<string, int> mp;
     for(int i = 0; i < hasher.GetSize(); ++i) {
         if(f[i] != ff[i]) {
@@ -228,13 +259,30 @@ bool checkForemost(const string& target, const int ta, const int tw, fstream& fi
     elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
     fout << "Transforming graph: " << elapsed.count() * 1e-9 << " seconds.\n";
 
-    if(f == ff) {
+    // Solution provided by AnnChann's code
+    begin = std::chrono::high_resolution_clock::now();
+    
+    Foremost fm(hasher.GetSize(), edges, des, ta, tw);
+    vector<int> fff = fm.getAllForemostTime();
+    
+    end = std::chrono::high_resolution_clock::now();
+    elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+    fout << "AnnChann's code: " << elapsed.count() * 1e-9 << " seconds.\n";
+
+    if(f == ff && f == fff) {
         fout << "Correct!\n";
         return true;
     }
 
     fout << "False!\n";
-    showDifference(fout, f, ff);
+    if(f != ff) {
+        fout << "f != ff\n";
+        showDifference(fout, f, ff);
+    }
+    if(f != fff) {
+        fout << "f != fff\n";
+        showDifference(fout, f, fff);
+    }
     return false;
 }
 
@@ -266,13 +314,30 @@ bool checkReverseForemost(const string& target, const int ta, const int tw, fstr
     elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
     fout << "Transforming graph: " << elapsed.count() * 1e-9 << " seconds.\n";
 
-    if(f == ff) {
+    // Solution provided by AnnChann's code
+    begin = std::chrono::high_resolution_clock::now();
+
+    ReverseForemost rfm(hasher.GetSize(), edges, des, ta, tw);
+    vector<int> fff = rfm.getAllReverseForemostTime();
+    
+    end = std::chrono::high_resolution_clock::now();
+    elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+    fout << "AnnChann's code: " << elapsed.count() * 1e-9 << " seconds.\n";
+
+    if(f == ff && f == fff) {
         fout << "Correct!\n";
         return true;
     }
     
     fout << "False!\n";
-    showDifference(fout, f, ff);
+    if(f != ff) {
+        fout << "f != ff\n";
+        showDifference(fout, f, ff);
+    }
+    if(f != fff) {
+        fout << "f != fff\n";
+        showDifference(fout, f, fff);
+    }
     return false;
 }
 
@@ -304,13 +369,30 @@ bool checkFastest(const string& target, const int ta, const int tw, fstream& fin
     elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
     fout << "Transforming graph: " << elapsed.count() * 1e-9 << " seconds.\n";
 
-    if(f == ff) {
+    // Solution provided by AnnChann's code
+    begin = std::chrono::high_resolution_clock::now();
+
+    Fastest ft(hasher.GetSize(), edges, des, ta, tw);
+    vector<int> fff = ft.getAllFastestTime();
+    
+    end = std::chrono::high_resolution_clock::now();
+    elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+    fout << "AnnChann's code: " << elapsed.count() * 1e-9 << " seconds.\n";
+
+    if(f == ff && f == fff) {
         fout << "Correct!\n";
         return true;
     }
     
     fout << "False!\n";
-    showDifference(fout, f, ff);
+    if(f != ff) {
+        fout << "f != ff\n";
+        showDifference(fout, f, ff);
+    }
+    if(f != fff) {
+        fout << "f != fff\n";
+        showDifference(fout, f, fff);
+    }
     return false;
 }
 
@@ -342,13 +424,30 @@ bool checkShortest(const string& target, const int ta, const int tw, fstream& fi
     elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
     fout << "Transforming graph: " << elapsed.count() * 1e-9 << " seconds.\n";
 
-    if(f == ff) {
+    // Solution provided by AnnChann's code
+    begin = std::chrono::high_resolution_clock::now();
+
+    Shortest st(hasher.GetSize(), edges, des, ta, tw);
+    vector<int> fff = st.getAllShortestTime();
+    
+    end = std::chrono::high_resolution_clock::now();
+    elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+    fout << "AnnChann's code: " << elapsed.count() * 1e-9 << " seconds.\n";
+
+    if(f == ff && f == fff) {
         fout << "Correct!\n";
         return true;
     }
     
     fout << "False!\n";
-    showDifference(fout, f, ff);
+    if(f != ff) {
+        fout << "f != ff\n";
+        showDifference(fout, f, ff);
+    }
+    if(f != fff) {
+        fout << "f != fff\n";
+        showDifference(fout, f, fff);
+    }
     return false;
 }
 
@@ -420,6 +519,7 @@ void testRandomNodes(int n, int RNGcode, fstream& fin, fstream& fout) {
 
     double foremostTime = 0.0, reverseForemostTime = 0.0, fastestTime = 0.0, shortestTime = 0.0;
     double tforemostTime = 0.0, treverseForemostTime = 0.0, tfastestTime = 0.0, tshortestTime = 0.0;
+    double aforemostTime = 0.0, areverseForemostTime = 0.0, afastestTime = 0.0, ashortestTime = 0.0;
     
     for(int i=0;i<n;++i) {
         const int target = rand(0, hasher.GetSize() - 1);
@@ -466,6 +566,27 @@ void testRandomNodes(int n, int RNGcode, fstream& fin, fstream& fout) {
         TransformingGraph::ComputingShortestPathDistance(target, ta, tw);
         endRun = std::chrono::high_resolution_clock::now();
         tshortestTime += std::chrono::duration_cast<std::chrono::nanoseconds>(endRun - startRun).count() * 1e-9;
+
+        // AnnChann's Code
+        startRun = std::chrono::high_resolution_clock::now();
+        Foremost fm(hasher.GetFixedId(), edges, target, ta, tw);
+        endRun = std::chrono::high_resolution_clock::now();
+        aforemostTime += std::chrono::duration_cast<std::chrono::nanoseconds>(endRun - startRun).count() * 1e-9;
+
+        startRun = std::chrono::high_resolution_clock::now();
+        ReverseForemost rfm(hasher.GetFixedId(), edges, target, ta, tw);
+        endRun = std::chrono::high_resolution_clock::now();
+        areverseForemostTime += std::chrono::duration_cast<std::chrono::nanoseconds>(endRun - startRun).count() * 1e-9;
+
+        startRun = std::chrono::high_resolution_clock::now();
+        Fastest ft(hasher.GetFixedId(), edges, target, ta, tw);
+        endRun = std::chrono::high_resolution_clock::now();
+        afastestTime += std::chrono::duration_cast<std::chrono::nanoseconds>(endRun - startRun).count() * 1e-9;
+
+        startRun = std::chrono::high_resolution_clock::now();
+        Shortest st(hasher.GetFixedId(), edges, target, ta, tw);
+        endRun = std::chrono::high_resolution_clock::now();
+        ashortestTime += std::chrono::duration_cast<std::chrono::nanoseconds>(endRun - startRun).count() * 1e-9;
     }
     
     fout << "Streaming graph:\n";
@@ -479,6 +600,12 @@ void testRandomNodes(int n, int RNGcode, fstream& fin, fstream& fout) {
     fout << "Reverse-Foremost: " << treverseForemostTime / n << " seconds.\n";
     fout << "Fastest: " << tfastestTime / n << " seconds.\n";
     fout << "Shortest: " << tshortestTime / n << " seconds.\n";
+
+    fout << "AnnChann's code:\n";
+    fout << "Foremost: " << aforemostTime / n << " seconds.\n";
+    fout << "Reverse-Foremost: " << areverseForemostTime / n << " seconds.\n";
+    fout << "Fastest: " << afastestTime / n << " seconds.\n";
+    fout << "Shortest: " << ashortestTime / n << " seconds.\n";
 
     auto end = std::chrono::high_resolution_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
@@ -563,12 +690,10 @@ void testGenerator(fstream& ftest, fstream& fsolution, const int k) {
 signed main() {
     const std::string DISTANCE_PATH = "../lvk_solution/distance/";
     const std::string PATH_PATH = "../lvk_solution/path/";
-    // const std::string DATA_PATH = "../raw/";
-    // const std::string DATA_PATH = "../raw/ca-cit-HepPh/";
-    // const std::string DATA_PATH = "../raw/youtube-u-growth/";
-    // const std::string DATA_PATH = "../raw/dblp_coauthor/";
     // const std::string DATA_PATH = "../Themis/Data/";
+    const std::string RD_DATA_PATH = "../src/task";
     const std::string DATA_PATH = "../Data/";
+    // const std::string DATA_PATH = "../Data/ca-cit-HepPh/";
     const std::string TEST_PATH = "../Themis/Tasks/reverseforemost/";
     const std::string OUT_PATH = "../res/res.out";
 
@@ -580,13 +705,13 @@ signed main() {
     }
 
     const int randomNode = 100;
+    /*
     char16_t* randomNodePtr = new char16_t;
     const int64_t RNGcode = (int64_t) randomNodePtr;
     delete randomNodePtr;
-    
-    /*
-    const int RNGcode = 2703;
     */
+    
+    const int RNGcode = 2703;
     fout << "Random nodes: " << randomNode << "\n";
     cerr << "Random nodes: " << randomNode << "\n";
     fout << "RNG code: " << RNGcode << "\n";
@@ -614,11 +739,11 @@ signed main() {
                     continue;
                 }
                     
-                /*
                 if(checkAccurate("1", 0, INT_MAX, fin, fout)) {
                     testRandomNodes(randomNode, RNGcode, fin, fout);
                 }   
-                        
+                    
+                /*
                 // Test for random nodes
                 testRandomNodes(randomNode, RNGcode, fin, fout);
                 
@@ -626,13 +751,13 @@ signed main() {
                 
                 // Check for accuracy
                 checkAccurate("1", 0, INT_MAX, fin, fout);
-                */
-               
+                
                 // Output distance
                 output_distance(DISTANCE_PATH + entry.path().parent_path().filename().string(), "1", 0, INT_MAX);
                 // Output path 
                 output_path(PATH_PATH + entry.path().parent_path().filename().string(), "1", 0, INT_MAX);
-               
+                */
+                
                 /*
                 // Test generator for themis
                 
@@ -678,7 +803,7 @@ signed main() {
 
     fout.close();
 
-    // createLog(OUT_PATH);
+    createLog(OUT_PATH);
 
     return 0;
 }
