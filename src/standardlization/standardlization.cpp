@@ -11,40 +11,33 @@ Mostly change all the negative weight to positive weight.
 Change float weight to int weight.
 */
 
-const string input_path = "../../Data";
-const string output_path = "../../Themis/Data";
+const string input_path = "../../old_data/";
+const string output_path = "../../Data/";
 
 bool ModGraph(fstream& fin, fstream& fout) {
     int n, m;
     fin >> n >> m;
     fout << n << " " << m << "\n";
 
-    // first constrant
-    if(n > 1000000 || m > 1000000) {
-        cerr << "n|m > 1000000\n";
-        return false;
-    }
-
     vector<tuple<int, int, int, int> > g;
 
     for(int i=0;i<m;++i) {
         int u, v;
         float ta, tw;
-        fin >> u >> v >> ta >> tw;
-        if(tw < 0) {
+        fin >> u >> v >> tw >> ta;
+        if(tw < 0.0f) {
             tw = -tw;
         }
 
-        if(ta > INT_MAX - tw) {
-            tw = INT_MAX - ta;
+        if(tw < 1.0f) {
+            tw = 1.0f;
         }
+
+        assert(ta <= INT_MAX - tw);
+
 
         g.push_back({u, v, static_cast<int>(ta), static_cast<int>(tw)});
     }
-
-    stable_sort(g.begin(), g.end(), [](const auto& a, const auto& b) {
-        return get<2>(a) < get<2>(b);
-    });
 
     for(const auto& [u, v, ta, tw] : g) {
         fout << u << " " << v << " " << ta << " " << tw << "\n";
@@ -80,6 +73,8 @@ signed main() {
 
                 if(ModGraph(fin, fout) == false) {
                     cerr << "ModGraph failed!\n";
+
+                    fin.close();
                     fout.close();
 
                     fs::remove_all(out_subdir); // remove the subdir

@@ -17,7 +17,7 @@ namespace StreamPresentation {
     void GenerateGraph(const vector<tuple<int, int, int, int> >& cur_g) {
         g = cur_g;
 
-        stable_sort(g.begin(), g.end(), [](const auto& a, const auto& b) {
+        sort(g.begin(), g.end(), [](const auto& a, const auto& b) {
             return get<2>(a) < get<2>(b);
         });
     }

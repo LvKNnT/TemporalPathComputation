@@ -38,13 +38,10 @@ void GenGraph(fstream& fin, fstream& fout) {
 
     // Preprocess the graph
     timer.Process();
-    stable_sort(g.begin(), g.end(), [](const vector<string>& a, const vector<string>& b) {
-        return timer.GetId(a[1]) < timer.GetId(b[1]);
-    });
 
     fout << hasher.GetSize() << " " << g.size() << "\n";
     for(const vector<string>& e : g) {
-        fout << hasher.GetId(e[0]) << " " << hasher.GetId(e[2]) << " " << timer.GetId(e[1])  << " " << timer.GetId(e[3]) - timer.GetId(e[1]) << "\n";
+        fout << hasher.GetId(e[0]) << " " << hasher.GetId(e[2])  << " " << timer.GetId(e[3]) - timer.GetId(e[1]) << " " << timer.GetId(e[1]) << "\n";
     }
 }
 

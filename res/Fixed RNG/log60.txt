@@ -1,0 +1,786 @@
+Random nodes: 100
+RNG code: 2703
+Current file: "out.ca-cit-HepPh"
+Generating graph...
+getting graph: 1.41221 seconds.
+generating streaming graph: 0.155987 seconds.
+generating transforming graph: 3.01325 seconds.
+sorting graph: 0.123862 seconds.
+Total time: 4.70538 seconds.
+Vertice count: 28093
+Edge count: 4596803
+Stream vertice count: 28093
+Stream edges count: 4596803
+Transforming vertice count: 397893
+Transforming edges count: 5116013
+AnnChann vertice count: 28093
+AnnChann edges count: 4596803
+
+Foremost!
+1-pass graph: 0.0349577 seconds.
+Transforming graph: 0.0335465 seconds.
+AnnChann's code: 0.00592554 seconds.
+Correct!
+Reverse-Foremost!
+1-pass graph: 0.00468581 seconds.
+Transforming graph: 5.675e-06 seconds.
+AnnChann's code: 0.00464623 seconds.
+Correct!
+Fastest!
+1-pass graph: 0.0290857 seconds.
+Transforming graph: 0.0290145 seconds.
+AnnChann's code: 0.025949 seconds.
+Correct!
+Shortest!
+1-pass graph: 0.0263223 seconds.
+Transforming graph: 0.0611537 seconds.
+AnnChann's code: 0.0193291 seconds.
+Correct!
+Test Accurate time measured: 0.27565 seconds.
+
+Average time for 100 random inputs:
+Streaming graph:
+Foremost: 0.0049284 seconds.
+Reverse-Foremost: 0.00692483 seconds.
+Fastest: 0.0080355 seconds.
+Shortest: 0.00787062 seconds.
+Transforming graph:
+Foremost: 0.00261612 seconds.
+Reverse-Foremost: 0.00722216 seconds.
+Fastest: 0.00243585 seconds.
+Shortest: 0.00497314 seconds.
+AnnChann's code:
+Foremost: 0.00495662 seconds.
+Reverse-Foremost: 0.00701141 seconds.
+Fastest: 0.0104769 seconds.
+Shortest: 0.0102861 seconds.
+Test Random Nodes time measured: 7.79391 seconds.
+
+Current file: "out.dblp_coauthor"
+Generating graph...
+getting graph: 10.9327 seconds.
+generating streaming graph: 0.829455 seconds.
+generating transforming graph: 42.577 seconds.
+sorting graph: 0.544157 seconds.
+Total time: 54.8834 seconds.
+Vertice count: 1824701
+Edge count: 29487744
+Stream vertice count: 1824701
+Stream edges count: 29487744
+Transforming vertice count: 9980544
+Transforming edges count: 38984457
+AnnChann vertice count: 1824701
+AnnChann edges count: 29487744
+
+Foremost!
+1-pass graph: 1.76924 seconds.
+Transforming graph: 1.14275 seconds.
+AnnChann's code: 0.0996177 seconds.
+Correct!
+Reverse-Foremost!
+1-pass graph: 0.055802 seconds.
+Transforming graph: 0.265204 seconds.
+AnnChann's code: 0.0682291 seconds.
+Correct!
+Fastest!
+1-pass graph: 0.900291 seconds.
+Transforming graph: 1.0976 seconds.
+AnnChann's code: 0.870697 seconds.
+Correct!
+Shortest!
+1-pass graph: 0.906561 seconds.
+Transforming graph: 2.12285 seconds.
+AnnChann's code: 0.81258 seconds.
+Correct!
+Test Accurate time measured: 10.4671 seconds.
+
+Average time for 100 random inputs:
+Streaming graph:
+Foremost: 0.049113 seconds.
+Reverse-Foremost: 0.0484122 seconds.
+Fastest: 0.30332 seconds.
+Shortest: 0.29999 seconds.
+Transforming graph:
+Foremost: 0.134307 seconds.
+Reverse-Foremost: 0.133074 seconds.
+Fastest: 0.121415 seconds.
+Shortest: 0.258006 seconds.
+AnnChann's code:
+Foremost: 0.0481189 seconds.
+Reverse-Foremost: 0.0573906 seconds.
+Fastest: 0.287771 seconds.
+Shortest: 0.295219 seconds.
+Test Random Nodes time measured: 210.978 seconds.
+
+Current file: "out.elec"
+Generating graph...
+getting graph: 0.02634 seconds.
+generating streaming graph: 0.002323 seconds.
+generating transforming graph: 0.152609 seconds.
+sorting graph: 0.00205932 seconds.
+Total time: 0.183368 seconds.
+Vertice count: 7118
+Edge count: 103675
+Stream vertice count: 7118
+Stream edges count: 103675
+Transforming vertice count: 201529
+Transforming edges count: 335567
+AnnChann vertice count: 7118
+AnnChann edges count: 103675
+
+Foremost!
+1-pass graph: 0.000679407 seconds.
+Transforming graph: 0.00411777 seconds.
+AnnChann's code: 0.000413393 seconds.
+Correct!
+Reverse-Foremost!
+1-pass graph: 0.000123855 seconds.
+Transforming graph: 5.4232e-05 seconds.
+AnnChann's code: 9.4858e-05 seconds.
+Correct!
+Fastest!
+1-pass graph: 0.000736317 seconds.
+Transforming graph: 0.00240332 seconds.
+AnnChann's code: 0.000769035 seconds.
+Correct!
+Shortest!
+1-pass graph: 0.000814478 seconds.
+Transforming graph: 0.00877837 seconds.
+AnnChann's code: 0.000829512 seconds.
+Correct!
+Test Accurate time measured: 0.0199574 seconds.
+
+Average time for 100 random inputs:
+Streaming graph:
+Foremost: 0.000132039 seconds.
+Reverse-Foremost: 9.50885e-05 seconds.
+Fastest: 0.000228796 seconds.
+Shortest: 0.000238672 seconds.
+Transforming graph:
+Foremost: 0.000453106 seconds.
+Reverse-Foremost: 0.00072763 seconds.
+Fastest: 0.000363981 seconds.
+Shortest: 0.00188899 seconds.
+AnnChann's code:
+Foremost: 0.000114696 seconds.
+Reverse-Foremost: 0.000100114 seconds.
+Fastest: 0.000276134 seconds.
+Shortest: 0.000283924 seconds.
+Test Random Nodes time measured: 0.493628 seconds.
+
+Current file: "out.enron"
+Generating graph...
+getting graph: 0.328343 seconds.
+generating streaming graph: 0.0536349 seconds.
+generating transforming graph: 1.3759 seconds.
+sorting graph: 0.0424175 seconds.
+Total time: 1.80038 seconds.
+Vertice count: 87273
+Edge count: 1148072
+Stream vertice count: 87273
+Stream edges count: 1148072
+Transforming vertice count: 1378512
+Transforming edges count: 2634687
+AnnChann vertice count: 87273
+AnnChann edges count: 1148072
+
+Foremost!
+1-pass graph: 0.0022309 seconds.
+Transforming graph: 0.0542546 seconds.
+AnnChann's code: 0.00199915 seconds.
+Correct!
+Reverse-Foremost!
+1-pass graph: 0.00308023 seconds.
+Transforming graph: 0.0450743 seconds.
+AnnChann's code: 0.00344206 seconds.
+Correct!
+Fastest!
+1-pass graph: 0.010881 seconds.
+Transforming graph: 0.0432254 seconds.
+AnnChann's code: 0.0103221 seconds.
+Correct!
+Shortest!
+1-pass graph: 0.00941296 seconds.
+Transforming graph: 0.153493 seconds.
+AnnChann's code: 0.00894952 seconds.
+Correct!
+Test Accurate time measured: 0.348526 seconds.
+
+Average time for 100 random inputs:
+Streaming graph:
+Foremost: 0.00131067 seconds.
+Reverse-Foremost: 0.00180893 seconds.
+Fastest: 0.00233417 seconds.
+Shortest: 0.00216293 seconds.
+Transforming graph:
+Foremost: 0.00438852 seconds.
+Reverse-Foremost: 0.0125767 seconds.
+Fastest: 0.00412363 seconds.
+Shortest: 0.0135655 seconds.
+AnnChann's code:
+Foremost: 0.00133749 seconds.
+Reverse-Foremost: 0.0018978 seconds.
+Fastest: 0.00285711 seconds.
+Shortest: 0.00282642 seconds.
+Test Random Nodes time measured: 5.15428 seconds.
+
+Current file: "out.epinions"
+Generating graph...
+getting graph: 0.273366 seconds.
+generating streaming graph: 0.0208445 seconds.
+generating transforming graph: 0.978927 seconds.
+sorting graph: 0.0170142 seconds.
+Total time: 1.29022 seconds.
+Vertice count: 131828
+Edge count: 841372
+Stream vertice count: 131828
+Stream edges count: 841372
+Transforming vertice count: 482866
+Transforming edges count: 1259574
+AnnChann vertice count: 131828
+AnnChann edges count: 841372
+
+Foremost!
+1-pass graph: 0.00171019 seconds.
+Transforming graph: 0.00160996 seconds.
+AnnChann's code: 0.00232309 seconds.
+Correct!
+Reverse-Foremost!
+1-pass graph: 0.00138928 seconds.
+Transforming graph: 0.000717027 seconds.
+AnnChann's code: 0.00210501 seconds.
+Correct!
+Fastest!
+1-pass graph: 0.0052018 seconds.
+Transforming graph: 0.000739023 seconds.
+AnnChann's code: 0.00266373 seconds.
+Correct!
+Shortest!
+1-pass graph: 0.0016807 seconds.
+Transforming graph: 7.8072e-05 seconds.
+AnnChann's code: 0.00208835 seconds.
+Correct!
+Test Accurate time measured: 0.022692 seconds.
+
+Average time for 100 random inputs:
+Streaming graph:
+Foremost: 0.00113453 seconds.
+Reverse-Foremost: 0.00134045 seconds.
+Fastest: 0.00251428 seconds.
+Shortest: 0.0026939 seconds.
+Transforming graph:
+Foremost: 0.0037993 seconds.
+Reverse-Foremost: 0.00212112 seconds.
+Fastest: 0.00311365 seconds.
+Shortest: 0.0096253 seconds.
+AnnChann's code:
+Foremost: 0.00111735 seconds.
+Reverse-Foremost: 0.0014374 seconds.
+Fastest: 0.00293797 seconds.
+Shortest: 0.00325474 seconds.
+Test Random Nodes time measured: 3.58167 seconds.
+
+Current file: "out.facebook-wosn-links"
+Generating graph...
+getting graph: 0.226634 seconds.
+generating streaming graph: 0.0269263 seconds.
+generating transforming graph: 1.12146 seconds.
+sorting graph: 0.0216467 seconds.
+Total time: 1.39672 seconds.
+Vertice count: 63731
+Edge count: 817035
+Stream vertice count: 63731
+Stream edges count: 817035
+Transforming vertice count: 756937
+Transforming edges count: 1798062
+AnnChann vertice count: 63731
+AnnChann edges count: 817035
+
+Foremost!
+1-pass graph: 0.00215179 seconds.
+Transforming graph: 0.0264015 seconds.
+AnnChann's code: 0.00214767 seconds.
+Correct!
+Reverse-Foremost!
+1-pass graph: 0.00089723 seconds.
+Transforming graph: 9.882e-06 seconds.
+AnnChann's code: 0.000914486 seconds.
+Correct!
+Fastest!
+1-pass graph: 0.00673075 seconds.
+Transforming graph: 0.0206217 seconds.
+AnnChann's code: 0.00761639 seconds.
+Correct!
+Shortest!
+1-pass graph: 0.00840414 seconds.
+Transforming graph: 0.0658926 seconds.
+AnnChann's code: 0.00884212 seconds.
+Correct!
+Test Accurate time measured: 0.153676 seconds.
+
+Average time for 100 random inputs:
+Streaming graph:
+Foremost: 0.00097487 seconds.
+Reverse-Foremost: 0.00101485 seconds.
+Fastest: 0.00170562 seconds.
+Shortest: 0.00152878 seconds.
+Transforming graph:
+Foremost: 0.00107487 seconds.
+Reverse-Foremost: 0.00114421 seconds.
+Fastest: 0.000855727 seconds.
+Shortest: 0.00292023 seconds.
+AnnChann's code:
+Foremost: 0.00094229 seconds.
+Reverse-Foremost: 0.00106128 seconds.
+Fastest: 0.00225649 seconds.
+Shortest: 0.00223975 seconds.
+Test Random Nodes time measured: 1.7973 seconds.
+
+Current file: "out.flickr-growth"
+Generating graph...
+getting graph: 13.4418 seconds.
+generating streaming graph: 0.782759 seconds.
+generating transforming graph: 64.3423 seconds.
+sorting graph: 0.516593 seconds.
+Total time: 79.0835 seconds.
+Vertice count: 2302925
+Edge count: 33140017
+Stream vertice count: 2302925
+Stream edges count: 33140017
+Transforming vertice count: 12600099
+Transforming edges count: 44932105
+AnnChann vertice count: 2302925
+AnnChann edges count: 33140017
+
+Foremost!
+1-pass graph: 2.16149 seconds.
+Transforming graph: 1.03513 seconds.
+AnnChann's code: 0.0684139 seconds.
+Correct!
+Reverse-Foremost!
+1-pass graph: 0.0439507 seconds.
+Transforming graph: 0.000690632 seconds.
+AnnChann's code: 0.0544559 seconds.
+Correct!
+Fastest!
+1-pass graph: 0.390622 seconds.
+Transforming graph: 0.883118 seconds.
+AnnChann's code: 0.451303 seconds.
+Correct!
+Shortest!
+1-pass graph: 0.517867 seconds.
+Transforming graph: 2.43793 seconds.
+AnnChann's code: 0.501928 seconds.
+Correct!
+Test Accurate time measured: 8.69468 seconds.
+
+Average time for 100 random inputs:
+Streaming graph:
+Foremost: 0.0424518 seconds.
+Reverse-Foremost: 0.0585979 seconds.
+Fastest: 0.172682 seconds.
+Shortest: 0.180937 seconds.
+Transforming graph:
+Foremost: 0.159694 seconds.
+Reverse-Foremost: 0.152641 seconds.
+Fastest: 0.151349 seconds.
+Shortest: 0.446943 seconds.
+AnnChann's code:
+Foremost: 0.0507271 seconds.
+Reverse-Foremost: 0.071611 seconds.
+Fastest: 0.190734 seconds.
+Shortest: 0.189507 seconds.
+Test Random Nodes time measured: 190.494 seconds.
+
+Current file: "out.trips_summary"
+Generating graph...
+getting graph: 0.0208451 seconds.
+generating streaming graph: 0.000216652 seconds.
+generating transforming graph: 0.00684852 seconds.
+sorting graph: 0.000219178 seconds.
+Total time: 0.0281523 seconds.
+Vertice count: 84
+Edge count: 5894
+Stream vertice count: 84
+Stream edges count: 5894
+Transforming vertice count: 7423
+Transforming edges count: 14951
+AnnChann vertice count: 84
+AnnChann edges count: 5894
+
+Foremost!
+1-pass graph: 1.0926e-05 seconds.
+Transforming graph: 2.1053e-05 seconds.
+AnnChann's code: 6.597e-06 seconds.
+Correct!
+Reverse-Foremost!
+1-pass graph: 5.238e-06 seconds.
+Transforming graph: 1.8e-05 seconds.
+AnnChann's code: 5.829e-06 seconds.
+Correct!
+Fastest!
+1-pass graph: 1.4092e-05 seconds.
+Transforming graph: 2.9782e-05 seconds.
+AnnChann's code: 1.7915e-05 seconds.
+Correct!
+Shortest!
+1-pass graph: 1.0144e-05 seconds.
+Transforming graph: 5.2351e-05 seconds.
+AnnChann's code: 1.3287e-05 seconds.
+Correct!
+Test Accurate time measured: 0.000213616 seconds.
+
+Average time for 100 random inputs:
+Streaming graph:
+Foremost: 4.83008e-06 seconds.
+Reverse-Foremost: 4.35453e-06 seconds.
+Fastest: 8.89742e-06 seconds.
+Shortest: 7.5768e-06 seconds.
+Transforming graph:
+Foremost: 4.46876e-06 seconds.
+Reverse-Foremost: 4.4435e-06 seconds.
+Fastest: 4.23585e-06 seconds.
+Shortest: 1.50752e-05 seconds.
+AnnChann's code:
+Foremost: 4.04054e-06 seconds.
+Reverse-Foremost: 4.29262e-06 seconds.
+Fastest: 1.1711e-05 seconds.
+Shortest: 1.08866e-05 seconds.
+Test Random Nodes time measured: 0.00853575 seconds.
+
+Current file: "out.trips_summary"
+Generating graph...
+getting graph: 0.00248504 seconds.
+generating streaming graph: 0.000332735 seconds.
+generating transforming graph: 0.00702298 seconds.
+sorting graph: 0.000208886 seconds.
+Total time: 0.010065 seconds.
+Vertice count: 84
+Edge count: 5894
+Stream vertice count: 84
+Stream edges count: 5894
+Transforming vertice count: 7423
+Transforming edges count: 14951
+AnnChann vertice count: 84
+AnnChann edges count: 5894
+
+Foremost!
+1-pass graph: 9.625e-06 seconds.
+Transforming graph: 1.5636e-05 seconds.
+AnnChann's code: 1.0373e-05 seconds.
+Correct!
+Reverse-Foremost!
+1-pass graph: 5.604e-06 seconds.
+Transforming graph: 1.2741e-05 seconds.
+AnnChann's code: 6.088e-06 seconds.
+Correct!
+Fastest!
+1-pass graph: 1.3641e-05 seconds.
+Transforming graph: 1.6361e-05 seconds.
+AnnChann's code: 1.8392e-05 seconds.
+Correct!
+Shortest!
+1-pass graph: 1.0024e-05 seconds.
+Transforming graph: 4.342e-05 seconds.
+AnnChann's code: 1.4157e-05 seconds.
+Correct!
+Test Accurate time measured: 0.000185939 seconds.
+
+Average time for 100 random inputs:
+Streaming graph:
+Foremost: 4.81552e-06 seconds.
+Reverse-Foremost: 4.41548e-06 seconds.
+Fastest: 8.94757e-06 seconds.
+Shortest: 7.5898e-06 seconds.
+Transforming graph:
+Foremost: 4.37748e-06 seconds.
+Reverse-Foremost: 4.46225e-06 seconds.
+Fastest: 4.25435e-06 seconds.
+Shortest: 1.5214e-05 seconds.
+AnnChann's code:
+Foremost: 4.01061e-06 seconds.
+Reverse-Foremost: 4.244e-06 seconds.
+Fastest: 1.18084e-05 seconds.
+Shortest: 1.08706e-05 seconds.
+Test Random Nodes time measured: 0.00855767 seconds.
+
+Current file: "out.munmun_digg_reply"
+Generating graph...
+getting graph: 0.0321631 seconds.
+generating streaming graph: 0.00338929 seconds.
+generating transforming graph: 0.160973 seconds.
+sorting graph: 0.00326699 seconds.
+Total time: 0.199831 seconds.
+Vertice count: 30398
+Edge count: 87627
+Stream vertice count: 30398
+Stream edges count: 87627
+Transforming vertice count: 169676
+Transforming edges count: 255648
+AnnChann vertice count: 30398
+AnnChann edges count: 87627
+
+Foremost!
+1-pass graph: 0.000336911 seconds.
+Transforming graph: 0.000789248 seconds.
+AnnChann's code: 0.000181314 seconds.
+Correct!
+Reverse-Foremost!
+1-pass graph: 0.000114536 seconds.
+Transforming graph: 6.306e-06 seconds.
+AnnChann's code: 0.000137982 seconds.
+Correct!
+Fastest!
+1-pass graph: 0.000222476 seconds.
+Transforming graph: 0.000148355 seconds.
+AnnChann's code: 0.000285071 seconds.
+Correct!
+Shortest!
+1-pass graph: 0.000204418 seconds.
+Transforming graph: 0.000373456 seconds.
+AnnChann's code: 0.000273009 seconds.
+Correct!
+Test Accurate time measured: 0.00319069 seconds.
+
+Average time for 100 random inputs:
+Streaming graph:
+Foremost: 7.73701e-05 seconds.
+Reverse-Foremost: 5.91035e-05 seconds.
+Fastest: 0.000185338 seconds.
+Shortest: 0.000183745 seconds.
+Transforming graph:
+Foremost: 9.36068e-05 seconds.
+Reverse-Foremost: 9.41453e-05 seconds.
+Fastest: 7.1112e-05 seconds.
+Shortest: 0.000303303 seconds.
+AnnChann's code:
+Foremost: 6.94638e-05 seconds.
+Reverse-Foremost: 7.33996e-05 seconds.
+Fastest: 0.000233164 seconds.
+Shortest: 0.000234125 seconds.
+Test Random Nodes time measured: 0.173147 seconds.
+
+Current file: "out.slashdot-threads"
+Generating graph...
+getting graph: 0.0444222 seconds.
+generating streaming graph: 0.00427604 seconds.
+generating transforming graph: 0.248758 seconds.
+sorting graph: 0.00388045 seconds.
+Total time: 0.301411 seconds.
+Vertice count: 51083
+Edge count: 140778
+Stream vertice count: 51083
+Stream edges count: 140778
+Transforming vertice count: 270670
+Transforming edges count: 414932
+AnnChann vertice count: 51083
+AnnChann edges count: 140778
+
+Foremost!
+1-pass graph: 0.000822722 seconds.
+Transforming graph: 0.00599257 seconds.
+AnnChann's code: 0.000511819 seconds.
+Correct!
+Reverse-Foremost!
+1-pass graph: 0.000236743 seconds.
+Transforming graph: 0.00050823 seconds.
+AnnChann's code: 0.000242441 seconds.
+Correct!
+Fastest!
+1-pass graph: 0.00140275 seconds.
+Transforming graph: 0.00287322 seconds.
+AnnChann's code: 0.00129355 seconds.
+Correct!
+Shortest!
+1-pass graph: 0.00155385 seconds.
+Transforming graph: 0.00726942 seconds.
+AnnChann's code: 0.00141574 seconds.
+Correct!
+Test Accurate time measured: 0.0253056 seconds.
+
+Average time for 100 random inputs:
+Streaming graph:
+Foremost: 0.00024804 seconds.
+Reverse-Foremost: 0.000168439 seconds.
+Fastest: 0.000534482 seconds.
+Shortest: 0.000566654 seconds.
+Transforming graph:
+Foremost: 0.00103026 seconds.
+Reverse-Foremost: 0.000973803 seconds.
+Fastest: 0.000691747 seconds.
+Shortest: 0.00205616 seconds.
+AnnChann's code:
+Foremost: 0.000197357 seconds.
+Reverse-Foremost: 0.000200697 seconds.
+Fastest: 0.000595622 seconds.
+Shortest: 0.000641815 seconds.
+Test Random Nodes time measured: 0.811191 seconds.
+
+Current file: "out.wikiconflict"
+Generating graph...
+getting graph: 0.753741 seconds.
+generating streaming graph: 0.117503 seconds.
+generating transforming graph: 4.09134 seconds.
+sorting graph: 0.124571 seconds.
+Total time: 5.08722 seconds.
+Vertice count: 118100
+Edge count: 2985759
+Stream vertice count: 116836
+Stream edges count: 2985759
+Transforming vertice count: 3042485
+Transforming edges count: 7457083
+AnnChann vertice count: 116836
+AnnChann edges count: 2985759
+
+Foremost!
+1-pass graph: 0.00505121 seconds.
+Transforming graph: 0.233116 seconds.
+AnnChann's code: 0.00535359 seconds.
+Correct!
+Reverse-Foremost!
+1-pass graph: 0.00300376 seconds.
+Transforming graph: 2.1886e-05 seconds.
+AnnChann's code: 0.00314558 seconds.
+Correct!
+Fastest!
+1-pass graph: 0.0638426 seconds.
+Transforming graph: 0.143793 seconds.
+AnnChann's code: 0.0471963 seconds.
+Correct!
+Shortest!
+1-pass graph: 0.0406942 seconds.
+Transforming graph: 0.518417 seconds.
+AnnChann's code: 0.0327047 seconds.
+Correct!
+Test Accurate time measured: 1.10602 seconds.
+
+Average time for 100 random inputs:
+Streaming graph:
+Foremost: 0.00327453 seconds.
+Reverse-Foremost: 0.00416115 seconds.
+Fastest: 0.00609389 seconds.
+Shortest: 0.00556756 seconds.
+Transforming graph:
+Foremost: 0.00535503 seconds.
+Reverse-Foremost: 0.0267921 seconds.
+Fastest: 0.00457267 seconds.
+Shortest: 0.0135998 seconds.
+AnnChann's code:
+Foremost: 0.00332658 seconds.
+Reverse-Foremost: 0.00427107 seconds.
+Fastest: 0.00799073 seconds.
+Shortest: 0.0076832 seconds.
+Test Random Nodes time measured: 9.32119 seconds.
+
+Current file: "out.wikipedia-growth"
+Generating graph...
+getting graph: 18.3963 seconds.
+generating streaming graph: 0.917489 seconds.
+generating transforming graph: 184.533 seconds.
+sorting graph: 0.576733 seconds.
+Total time: 204.423 seconds.
+Vertice count: 1870709
+Edge count: 39953145
+Stream vertice count: 1870709
+Stream edges count: 39953145
+Transforming vertice count: 34814941
+Transforming edges count: 80189113
+AnnChann vertice count: 1870709
+AnnChann edges count: 39953145
+
+Foremost!
+1-pass graph: 7.77136 seconds.
+Transforming graph: 3.79053 seconds.
+AnnChann's code: 0.124883 seconds.
+Correct!
+Reverse-Foremost!
+1-pass graph: 0.0964704 seconds.
+Transforming graph: 2.95674 seconds.
+AnnChann's code: 0.112753 seconds.
+Correct!
+Fastest!
+1-pass graph: 1.63331 seconds.
+Transforming graph: 3.55686 seconds.
+AnnChann's code: 1.75976 seconds.
+Correct!
+Shortest!
+1-pass graph: 1.62769 seconds.
+Transforming graph: 10.0187 seconds.
+AnnChann's code: 1.56773 seconds.
+Correct!
+Test Accurate time measured: 35.4326 seconds.
+
+Average time for 100 random inputs:
+Streaming graph:
+Foremost: 0.0826026 seconds.
+Reverse-Foremost: 0.0821145 seconds.
+Fastest: 0.765328 seconds.
+Shortest: 0.735444 seconds.
+Transforming graph:
+Foremost: 1.10875 seconds.
+Reverse-Foremost: 1.59712 seconds.
+Fastest: 1.08107 seconds.
+Shortest: 2.89667 seconds.
+AnnChann's code:
+Foremost: 0.0840743 seconds.
+Reverse-Foremost: 0.0946298 seconds.
+Fastest: 0.669177 seconds.
+Shortest: 0.687198 seconds.
+Test Random Nodes time measured: 1010.35 seconds.
+
+Current file: "out.youtube-u-growth"
+Generating graph...
+getting graph: 4.1385 seconds.
+generating streaming graph: 0.288536 seconds.
+generating transforming graph: 16.2449 seconds.
+sorting graph: 0.21301 seconds.
+Total time: 20.885 seconds.
+Vertice count: 3223585
+Edge count: 9375374
+Stream vertice count: 3223585
+Stream edges count: 9375374
+Transforming vertice count: 8901388
+Transforming edges count: 16834179
+AnnChann vertice count: 3223585
+AnnChann edges count: 9375374
+
+Foremost!
+1-pass graph: 0.0400892 seconds.
+Transforming graph: 0.611936 seconds.
+AnnChann's code: 0.0481349 seconds.
+Correct!
+Reverse-Foremost!
+1-pass graph: 0.0135872 seconds.
+Transforming graph: 0.000845445 seconds.
+AnnChann's code: 0.0250674 seconds.
+Correct!
+Fastest!
+1-pass graph: 0.423292 seconds.
+Transforming graph: 0.446299 seconds.
+AnnChann's code: 0.301736 seconds.
+Correct!
+Shortest!
+1-pass graph: 0.522298 seconds.
+Transforming graph: 1.00857 seconds.
+AnnChann's code: 0.367923 seconds.
+Correct!
+Test Accurate time measured: 4.12301 seconds.
+
+Average time for 100 random inputs:
+Streaming graph:
+Foremost: 0.0194771 seconds.
+Reverse-Foremost: 0.0190024 seconds.
+Fastest: 0.0698322 seconds.
+Shortest: 0.0709752 seconds.
+Transforming graph:
+Foremost: 0.00987487 seconds.
+Reverse-Foremost: 0.0424542 seconds.
+Fastest: 0.00758285 seconds.
+Shortest: 0.0219175 seconds.
+AnnChann's code:
+Foremost: 0.0182872 seconds.
+Reverse-Foremost: 0.0295847 seconds.
+Fastest: 0.0842712 seconds.
+Shortest: 0.0842967 seconds.
+Test Random Nodes time measured: 49.1765 seconds.
+

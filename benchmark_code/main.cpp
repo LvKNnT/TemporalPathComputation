@@ -114,6 +114,21 @@ void getGraph(fstream& fin, fstream& fout) {
     cerr << "AnnChann edges count: " << edges.size() << "\n";
 
     fout << "\n";
+
+    return;
+
+    // the rest is for debug purposes only
+    fstream fg("../Data/g.out", ios::out);
+    for(int i=0;i<g.size();++i) {
+        fg << hasher.GetString(get<0>(StreamPresentation::g[i])) << " " << hasher.GetString(get<1>(StreamPresentation::g[i])) << " " << get<2>(StreamPresentation::g[i]) << " " << get<3>(StreamPresentation::g[i]) << "\n";
+    }
+    fg.close();
+
+    fstream fe("../Data/e.out", ios::out);
+    for(int i=0;i<edges.size();++i) {
+        fe << hasher.GetString(edges[i].u) << " " << hasher.GetString(edges[i].v) << " " << edges[i].t << " " << edges[i].lambda << "\n";
+    }
+    fe.close();
 }
 
 void ClearGraph() {
@@ -506,14 +521,120 @@ void testRandomNodesStreamGraph(int n, const int64_t& RNGcode, fstream& fin, fst
     fout << "Test Random Stream Graph time measured: " << elapsed.count() * 1e-9 << " seconds.\n\n";       
 }
 
-void testRandomNodes(int n, int RNGcode, fstream& fin, fstream& fout) {
+void testAtNode(const string& target, const int ta, const int tw, fstream& fin, fstream& fout) {
+    // Counting time testing for each input
+    auto begin = std::chrono::high_resolution_clock::now();
+    
+    // Setting input for both solutions
+    const int des = hasher.GetId(target);
+    if(des == -1) {
+        fout << "Input error!\n";
+        return;
+    }
+
+    fout << "Test time for:\n";
+    fout << "Target: " << target << "\n";
+    fout << "Time window: " << ta << " " << tw << "\n";
+
+    double foremostTime = 0.0, reverseForemostTime = 0.0, fastestTime = 0.0, shortestTime = 0.0;
+    double tforemostTime = 0.0, treverseForemostTime = 0.0, tfastestTime = 0.0, tshortestTime = 0.0;
+    double aforemostTime = 0.0, areverseForemostTime = 0.0, afastestTime = 0.0, ashortestTime = 0.0;
+    
+    // Streaming Graph
+    auto startRun = std::chrono::high_resolution_clock::now();
+    StreamPresentation::ComputingForemostTime(des, ta, tw);
+    auto endRun = std::chrono::high_resolution_clock::now();
+    foremostTime += std::chrono::duration_cast<std::chrono::nanoseconds>(endRun - startRun).count() * 1e-9;
+    
+    startRun = std::chrono::high_resolution_clock::now();
+    StreamPresentation::ComputingReverseForemostTime(des, ta, tw);
+    endRun = std::chrono::high_resolution_clock::now();
+    reverseForemostTime += std::chrono::duration_cast<std::chrono::nanoseconds>(endRun - startRun).count() * 1e-9;
+    
+    startRun = std::chrono::high_resolution_clock::now();
+    StreamPresentation::ComputingFastestPathDuration(des, ta, tw);
+    endRun = std::chrono::high_resolution_clock::now();
+    fastestTime += std::chrono::duration_cast<std::chrono::nanoseconds>(endRun - startRun).count() * 1e-9;
+    
+    startRun = std::chrono::high_resolution_clock::now();
+    StreamPresentation::ComputingShortestPathDistance(des, ta, tw);
+    endRun = std::chrono::high_resolution_clock::now();
+    shortestTime += std::chrono::duration_cast<std::chrono::nanoseconds>(endRun - startRun).count() * 1e-9;
+    
+    // Transforming Graph
+    startRun = std::chrono::high_resolution_clock::now();
+    TransformingGraph::ComputingForemostTime(des, ta, tw);
+    endRun = std::chrono::high_resolution_clock::now();
+    tforemostTime += std::chrono::duration_cast<std::chrono::nanoseconds>(endRun - startRun).count() * 1e-9;
+    
+    startRun = std::chrono::high_resolution_clock::now();
+    TransformingGraph::ComputingReverseForemostTime(des, ta, tw);
+    endRun = std::chrono::high_resolution_clock::now();
+    treverseForemostTime += std::chrono::duration_cast<std::chrono::nanoseconds>(endRun - startRun).count() * 1e-9;
+    
+    startRun = std::chrono::high_resolution_clock::now();
+    TransformingGraph::ComputingFastestPathDuration(des, ta, tw);
+    endRun = std::chrono::high_resolution_clock::now();
+    tfastestTime += std::chrono::duration_cast<std::chrono::nanoseconds>(endRun - startRun).count() * 1e-9;
+    
+    startRun = std::chrono::high_resolution_clock::now();
+    TransformingGraph::ComputingShortestPathDistance(des, ta, tw);
+    endRun = std::chrono::high_resolution_clock::now();
+    tshortestTime += std::chrono::duration_cast<std::chrono::nanoseconds>(endRun - startRun).count() * 1e-9;
+
+    // AnnChann's Code
+    startRun = std::chrono::high_resolution_clock::now();
+    Foremost fm(hasher.GetFixedId(), edges, des, ta, tw);
+    endRun = std::chrono::high_resolution_clock::now();
+    aforemostTime += std::chrono::duration_cast<std::chrono::nanoseconds>(endRun - startRun).count() * 1e-9;
+
+    startRun = std::chrono::high_resolution_clock::now();
+    ReverseForemost rfm(hasher.GetFixedId(), edges, des, ta, tw);
+    endRun = std::chrono::high_resolution_clock::now();
+    areverseForemostTime += std::chrono::duration_cast<std::chrono::nanoseconds>(endRun - startRun).count() * 1e-9;
+
+    startRun = std::chrono::high_resolution_clock::now();
+    Fastest ft(hasher.GetFixedId(), edges, des, ta, tw);
+    endRun = std::chrono::high_resolution_clock::now();
+    afastestTime += std::chrono::duration_cast<std::chrono::nanoseconds>(endRun - startRun).count() * 1e-9;
+
+    startRun = std::chrono::high_resolution_clock::now();
+    Shortest st(hasher.GetFixedId(), edges, des, ta, tw);
+    endRun = std::chrono::high_resolution_clock::now();
+    ashortestTime += std::chrono::duration_cast<std::chrono::nanoseconds>(endRun - startRun).count() * 1e-9;
+    
+    fout << "Streaming graph:\n";
+    fout << "Foremost: " << foremostTime << " seconds.\n";
+    fout << "Reverse-Foremost: " << reverseForemostTime << " seconds.\n";
+    fout << "Fastest: " << fastestTime << " seconds.\n";
+    fout << "Shortest: " << shortestTime << " seconds.\n";
+
+    fout << "Transforming graph:\n";
+    fout << "Foremost: " << tforemostTime << " seconds.\n";
+    fout << "Reverse-Foremost: " << treverseForemostTime << " seconds.\n";
+    fout << "Fastest: " << tfastestTime << " seconds.\n";
+    fout << "Shortest: " << tshortestTime << " seconds.\n";
+
+    fout << "AnnChann's code:\n";
+    fout << "Foremost: " << aforemostTime << " seconds.\n";
+    fout << "Reverse-Foremost: " << areverseForemostTime << " seconds.\n";
+    fout << "Fastest: " << afastestTime << " seconds.\n";
+    fout << "Shortest: " << ashortestTime << " seconds.\n";
+
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+    cerr << "Test time measured: " << elapsed.count() * 1e-9 << " seconds.\n";            
+    fout << "Test time measured: " << elapsed.count() * 1e-9 << " seconds.\n\n";   
+}
+
+void testRandomNodes(int n, int64_t RNGcode, fstream& fin, fstream& fout) {
     // Counting time testing for each input
     auto begin = std::chrono::high_resolution_clock::now();
 
     // RNG
     mt19937_64 RNG(RNGcode);
     auto rand = [&](const int& l, const int& r) -> int {
-        return uniform_int_distribution<int>(l, r)(RNG);
+        return uniform_int_distribution<int64_t>(l, r)(RNG);
     };
     
     // Check for random 100 inputs
@@ -615,14 +736,14 @@ void testRandomNodes(int n, int RNGcode, fstream& fin, fstream& fout) {
     fout << "Test Random Nodes time measured: " << elapsed.count() * 1e-9 << " seconds.\n\n";                
 }
 
-bool checkRandomNodes(int n, int RNGcode, fstream& fin, fstream& fout) {
+bool checkRandomNodes(int n, int64_t RNGcode, fstream& fin, fstream& fout) {
     // Counting time testing for each input
     auto begin = std::chrono::high_resolution_clock::now();
 
     // RNG
     mt19937_64 RNG(RNGcode);
     auto rand = [&](const int& l, const int& r) -> int {
-        return uniform_int_distribution<int>(l, r)(RNG);
+        return uniform_int_distribution<int64_t>(l, r)(RNG);
     };
     
     // Check for random 100 inputs
@@ -748,12 +869,40 @@ void testGenerator(fstream& ftest, fstream& fsolution, const int k) {
 signed main() {
     const std::string DISTANCE_PATH = "../lvk_solution/distance/";
     const std::string PATH_PATH = "../lvk_solution/path/";
-    // const std::string DATA_PATH = "../Themis/Data/";
-    const std::string RD_DATA_PATH = "../src/task";
-    const std::string DATA_PATH = "../Data/";
-    // const std::string DATA_PATH = "../Data/ca-cit-HepPh/";
-    const std::string TEST_PATH = "../Themis/Tasks/reverseforemost/";
+    // const std::string DATA_PATH = "../Data/";
+    const std::string DATA_PATH = "../Data/ca-cit-HepPh/";
+    // const std::string DATA_PATH = "../Data/wikiconflict/";
     const std::string OUT_PATH = "../res/res.out";
+    
+    // better UI command line
+    cerr << "Choose the operation:\n";
+    cerr << "1. Check for accurate from random nodes\n";
+    cerr << "2. Test for random nodes\n";
+    cerr << "3. Get path and solution\n";
+    cerr << "4. Check accruate at specific node\n";
+    cerr << "5. Test at specific node\n";
+    cerr << "Input your choice: ";
+
+    int choice;
+    cin >> choice;
+    if(choice < 1 || choice > 5) {
+        cerr << "Invalid choice!\n";
+        return 1;
+    }
+    cerr << "You chose option " << choice << ".\n";
+
+
+
+    int randomNode = 100;
+    if(choice == 1 || choice == 2) {
+        cerr << "Input the number of random nodes: ";
+        cin >> randomNode;
+    }
+    
+    int64_t RNGcode = 2703;
+    char16_t* randomNodePtr = new char16_t;
+    RNGcode = (int64_t) randomNodePtr;
+    delete randomNodePtr;
 
     // Access to output
     fstream fout(OUT_PATH, ios::out);
@@ -761,26 +910,36 @@ signed main() {
         cerr << "Failed to open output file!\n";
         return 1;
     }
-
-    const int randomNode = 100;
-    /*
-    char16_t* randomNodePtr = new char16_t;
-    const int64_t RNGcode = (int64_t) randomNodePtr;
-    delete randomNodePtr;
-    */
     
-    const int RNGcode = 2703;
-    fout << "Random nodes: " << randomNode << "\n";
-    cerr << "Random nodes: " << randomNode << "\n";
-    fout << "RNG code: " << RNGcode << "\n";
-    cerr << "RNG code: " << RNGcode << "\n";
+    if(choice == 1 || choice == 2) {
+        fout << "Random nodes: " << randomNode << "\n";
+        cerr << "Random nodes: " << randomNode << "\n";
+        fout << "RNG code: " << RNGcode << "\n";
+        cerr << "RNG code: " << RNGcode << "\n";
 
+        fout << "\n";
+    }
+
+    string target = "1";
+    int ta = 0, tw = INT_MAX;
+    if(choice == 3 || choice == 4 || choice == 5) {
+        cerr << "Input the target node: ";
+        cin >> target;
+        cerr << "Input the time window: ";
+        cin >> ta >> tw;
+        
+        fout << "Target node: " << target << "\n";
+        fout << "Time window: " << ta << " " << tw << "\n";
+    }
+    
     try {
         for (const auto& entry : fs::recursive_directory_iterator(DATA_PATH)) {
             if (entry.is_regular_file() && entry.path().filename().string().rfind("out", 0) == 0) {
                 cerr << "Processing file: " << entry.path().filename() << "\n";
-                fout << "Current file: " << entry.path().filename() << "\n";
-
+                if(choice == 1 || choice == 2) {
+                    fout << "Processing file: " << entry.path().filename() << "\n";
+                }
+                
                 fstream fin(entry.path(), ios::in);
                 if(!fin.is_open()) {
                     cerr << "Failed to open file!\n";
@@ -788,66 +947,53 @@ signed main() {
                 }  
                 
                 getGraph(fin, fout);
-                if(StreamPresentation::g.size() == 0) {
-                    cerr << "Input error!\n";
-                    // fout << "Input error!\n";
+
+                // Empty graph check
+                if(StreamPresentation::g.empty()) {
+                    cerr << "Graph is empty!\n";
+                    fout << "Graph is empty!\n";
                     
                     ClearGraph();
                     fin.close();
                     continue;
                 }
-                    
-                if(checkAccurate("1", 0, INT_MAX, fin, fout, true)) {
-                    checkRandomNodes(randomNode, RNGcode, fin, fout);
-                }   
-                    
-                /*
-                // Test for random nodes
-                testRandomNodes(randomNode, RNGcode, fin, fout);
-                
-                testRandomNodesStreamGraph(randomNode, RNGcode, fin, fout);
-                
-                // Check for accuracy
-                checkAccurate("1", 0, INT_MAX, fin, fout);
-                
-                // Output distance
-                output_distance(DISTANCE_PATH + entry.path().parent_path().filename().string(), "1", 0, INT_MAX);
-                // Output path 
-                output_path(PATH_PATH + entry.path().parent_path().filename().string(), "1", 0, INT_MAX);
-                */
-                
-                /*
-                // Test generator for themis
-                
-                const string testName = entry.path().parent_path().filename().string();
-                
-                // Makeing test in subfolder like themis format
-                for(int i=0;i<2;++i) {
-                    // Create subfolder
-                    fs::path subfolder = fs::path(TEST_PATH) / (testName + "_" + to_string(i+1));
-                    fs::create_directories(subfolder);
-                    
-                    // Create test file
-                    fs::path testFile = subfolder / ("reverseforemost.INP");
-                    fs::path solutionFile = subfolder / ("reverseforemost.OUT");
-                    
-                    fstream testFileStream(testFile, ios::out);
-                    if(!testFileStream.is_open()) {
-                        cerr << "Failed to open test file!\n";
-                        continue;
-                    }
-                    fstream solutionFileStream(solutionFile, ios::out);
-                    if(!solutionFileStream.is_open()) {
-                        cerr << "Failed to open solution file!\n";
-                        continue;
-                    }
-                    
-                    testGenerator(testFileStream, solutionFileStream, i);
-                    
-                    testFileStream.close();
-                    solutionFileStream.close();
+
+                switch (choice) {
+                    case 1:
+                        // Check accurate for random nodes
+                        if(checkAccurate(target, ta, tw, fin, fout, true)) {
+                            checkRandomNodes(randomNode, RNGcode, fin, fout);
+                        }
+
+                        break;
+                    case 2:
+                        // Test for random nodes
+                        if(checkAccurate(target, ta, tw, fin, fout, true)) {
+                            testRandomNodes(randomNode, RNGcode, fin, fout);
+                        }
+
+                        break;
+                    case 3:
+                        // Output distance
+                        output_distance(DISTANCE_PATH + entry.path().parent_path().filename().string(), target, ta, tw);
+                        // Output path 
+                        output_path(PATH_PATH + entry.path().parent_path().filename().string(), target, ta, tw);
+
+                        break;
+                    case 4:
+                        // Check accurate for specific node
+                        checkAccurate(target, ta, tw, fin, fout, true);
+
+                        break;
+                    case 5:
+                        // Test for specific node
+                        if(checkAccurate(target, ta, tw, fin, fout, true)) {
+                            testAtNode(target, ta, tw, fin, fout);
+                        }
+
+                        break;
+                    default: break;
                 }
-                */
                 
                 ClearGraph();
                 
@@ -858,10 +1004,10 @@ signed main() {
         cerr << "Filesystem error: " << e.what() << std::endl;
         return 1;
     }
-
+        
     fout.close();
-
+        
     createLog(OUT_PATH);
-
+    
     return 0;
 }
