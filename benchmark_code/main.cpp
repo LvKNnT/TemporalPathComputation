@@ -869,8 +869,8 @@ void testGenerator(fstream& ftest, fstream& fsolution, const int k) {
 signed main() {
     const std::string DISTANCE_PATH = "../lvk_solution/distance/";
     const std::string PATH_PATH = "../lvk_solution/path/";
-    // const std::string DATA_PATH = "../Data/";
-    const std::string DATA_PATH = "../Data/ca-cit-HepPh/";
+    const std::string DATA_PATH = "../Data/";
+    // const std::string DATA_PATH = "../Data/ca-cit-HepPh/";
     // const std::string DATA_PATH = "../Data/wikiconflict/";
     const std::string OUT_PATH = "../res/res.out";
     
@@ -905,6 +905,10 @@ signed main() {
     delete randomNodePtr;
 
     // Access to output
+    // create the output directory if it doesn't exist
+    if(!fs::exists("../res/")) {
+        fs::create_directory("../res/");
+    }
     fstream fout(OUT_PATH, ios::out);
     if(!fout.is_open()) {
         cerr << "Failed to open output file!\n";
